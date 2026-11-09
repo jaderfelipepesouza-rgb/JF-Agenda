@@ -1,56 +1,642 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101010"><meta name="description" content="Agenda flexível para atendimentos de personal trainer"><link rel="manifest" href="manifest.webmanifest"><title>JF | Agenda</title><style>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#101010"><meta name="description" content="Agenda flexível para atendimentos de personal trainer"><link rel="manifest" href="manifest.webmanifest"><title>JF | Agenda</title><style>
 :root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#f2f2f2;background:#0d0d0d;font-synthesis:none}*{box-sizing:border-box}body{margin:0;padding-bottom:90px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}.wrap{max-width:900px;margin:0 auto;padding:20px 16px}header{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #282828;padding-bottom:14px}h1{font-size:25px;letter-spacing:.05em;font-family:Georgia,serif;margin:0}h1 span{color:#ffd700}h2{font-size:20px;margin:0 0 12px}h3{font-size:15px;margin:0 0 10px}.muted,small{color:#aaa}.small{font-size:12px}.panel{background:#181818;border:1px solid #303030;border-radius:15px;padding:16px;margin-top:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#ccc;margin:8px 0}input,select,textarea{background:#101010;color:#fff;border:1px solid #434343;border-radius:9px;padding:11px;min-width:0;width:100%}input:focus,select:focus,textarea:focus{outline:1px solid #ffd700}.btn{background:#ffd700;color:#101010;border:0;border-radius:10px;padding:11px 14px;font-weight:700}.btn.secondary{background:#262626;color:#f5f5f5;border:1px solid #454545}.btn.danger{background:#382021;color:#ffb3b3}.btn.tiny{padding:7px 9px;font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.topnav{position:fixed;bottom:0;left:0;right:0;background:#131313;border-top:1px solid #353535;display:flex;justify-content:center;z-index:9;padding-bottom:env(safe-area-inset-bottom)}.topnav button{flex:1;max-width:190px;background:none;color:#aaa;padding:13px 3px;border:0;font-size:12px}.topnav button.active{color:#ffd700;border-top:2px solid #ffd700}.hidden{display:none!important}.item{padding:12px 0;border-bottom:1px solid #303030;display:flex;justify-content:space-between;align-items:center;gap:12px}.item:last-child{border-bottom:0}.item-main{min-width:0}.pill{font-size:11px;border-radius:99px;padding:4px 8px;background:#303030;color:#ddd}.pill.free{background:#183125;color:#90e2a8}.pill.busy{background:#312d1a;color:#ffe17a}.time{font-variant-numeric:tabular-nums;font-weight:700}.stat{border-radius:12px;background:#111;border:1px solid #333;padding:12px}.stat strong{font-size:23px;color:#ffd700}.stat span{display:block;font-size:12px;color:#aaa}.slots{display:flex;gap:8px;flex-wrap:wrap}.slot{padding:9px 11px;background:#1b3226;border:1px solid #37664a;border-radius:9px;color:#b6f1c7}.slot.selected{background:#ffd700;color:#111;border-color:#ffd700;font-weight:700}.slot.offered{border-color:#978048;background:#302a19;color:#e7ce78}.dayhead{margin-top:14px;font-weight:700;color:#ffd700}.preview{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;background:#101010;border:1px solid #3b3b3b;border-radius:12px;padding:15px}.note{border-left:3px solid #ffd700;padding-left:10px;color:#ccc;font-size:13px;line-height:1.55}.empty{padding:22px 4px;color:#a6a6a6;text-align:center}.checkbox{width:auto;accent-color:#ffd700}.rowcheck{display:flex;align-items:center;gap:8px}.rowcheck input{width:auto}dialog{border:1px solid #444;background:#1b1b1b;color:#eee;border-radius:15px;max-width:min(95vw,500px);width:100%;padding:20px}dialog::backdrop{background:#000a}.m0{margin:0}.mt{margin-top:12px}.logo{border:1px solid #ffd700;color:#ffd700;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-family:Georgia,serif;font-weight:700}.divider{height:1px;background:#333;margin:15px 0}@media(max-width:550px){.grid3{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.wrap{padding:14px 12px}.panel{padding:13px}.btn{padding:10px}.actions{align-items:stretch}}@media(min-width:600px){body{padding-bottom:90px}}
-</style></head><body><main class="wrap"><header><div style="display:flex;gap:12px;align-items:center"><div class="logo">JF</div><div><h1>JF <span>|</span> Agenda</h1><div class="small muted">Seus horários, do seu jeito</div></div></div><div class="pill" id="todayLabel"></div></header>
-<section id="page-agenda"><div class="panel"><div class="actions" style="justify-content:space-between"><h2 style="margin:0">Agenda</h2><button class="btn" onclick="openAppointment()">+ Atendimento</button></div><div class="grid mt"><label class="field">Escolher data<input type="date" id="agendaDate" onchange="renderAgenda()"></label><label class="field">Exibir<select id="agendaMode" onchange="renderAgenda()"><option value="day">Dia escolhido</option><option value="week">Próximos 7 dias</option></select></label></div><div id="agendaStats" class="grid3 mt"></div></div><div class="panel"><h3>Compromissos e intervalos</h3><div id="agendaItems"></div></div><div class="panel"><p class="note m0">A agenda aceita qualquer minuto de início: 15h05, 16h25 ou 19h40. Os compromissos recorrentes valem semanalmente, e é possível cancelar apenas uma ocorrência.</p></div></section>
+
+:root{color-scheme:dark}body{padding-bottom:calc(90px + env(safe-area-inset-bottom))}dialog{max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:auto;overscroll-behavior:contain}dialog .actions{margin-bottom:4px}dialog input,dialog select,.clock{font-size:16px}fieldset{border:1px solid #434343;border-radius:9px;margin:12px 0;padding:8px 12px}.item-main{overflow-wrap:anywhere}.grade{margin-top:6px;padding-left:12px;border-left:2px solid #ffd700}.cancelled .time{text-decoration:line-through}.status{color:#ffd700}.settings-day{display:grid;grid-template-columns:96px minmax(0,1fr)}@media(max-width:420px){.item{flex-wrap:wrap}.settings-day{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}}
+</style></head><body><main class="wrap"><header><div style="display:flex;gap:12px;align-items:center"><div class="logo">JF</div><div><h1>JF <span>|</span> Agenda</h1><div class="small muted">Seus horários, do seu jeito · v0.2</div></div></div><div class="pill" id="todayLabel"></div></header>
+<p id="storageNotice" class="note hidden" role="alert"></p><section id="page-agenda"><div class="panel"><div class="actions" style="justify-content:space-between"><h2 style="margin:0">Agenda</h2><button class="btn" onclick="openAppointment()">+ Avulso</button><button class="btn secondary" onclick="openAppointment({mode: 'block'})">+ Bloqueio</button></div><div class="grid mt"><label class="field">Escolher data<input type="date" id="agendaDate" onchange="renderAgenda()"></label><label class="field">Exibir<select id="agendaMode" onchange="renderAgenda()"><option value="day">Dia escolhido</option><option value="week">Próximos 7 dias</option></select></label></div><div id="agendaStats" class="grid3 mt"></div></div><div class="panel"><h3>Compromissos e intervalos</h3><div id="agendaItems"></div></div><div class="panel"><p class="note m0">A agenda aceita qualquer minuto de início: 15h05, 16h25 ou 19h40. Os compromissos recorrentes valem semanalmente, e podem ser ajustados a partir de Alunos → Horários fixos. Na agenda, edite ou cancele apenas a aula escolhida.</p></div></section>
 <section id="page-alunos" class="hidden"><div class="panel"><h2>Alunos</h2><form id="studentForm" onsubmit="addStudent(event)"><div class="grid"><label class="field">Nome<input name="name" maxlength="100" required placeholder="Nome do aluno"></label><label class="field">Telefone (opcional)<input name="phone" maxlength="30" placeholder="(38) 99999-9999"></label></div><button class="btn" type="submit">+ Cadastrar aluno</button></form></div><div class="panel"><h3>Alunos cadastrados</h3><div id="studentsList"></div></div></section>
-<section id="page-disponibilidade" class="hidden"><div class="panel"><h2>Gerador de disponibilidade</h2><p class="muted small">Escolha o período, filtre os horários e selecione exatamente quais deseja enviar.</p><div class="grid"><label class="field">De<input id="fromDate" type="date" onchange="renderAvailability()"></label><label class="field">Até<input id="toDate" type="date" onchange="renderAvailability()"></label><label class="field">Turno<select id="turn" onchange="renderAvailability()"><option value="all">Todos</option><option value="afternoon">Tarde (12h–17h59)</option><option value="night">Noite (18h–23h59)</option><option value="morning">Manhã (antes das 12h)</option></select></label><label class="field">Duração da aula (minutos)<input id="slotDuration" type="number" min="10" max="240" value="50" onchange="renderAvailability()"></label><label class="field">Inícios a cada (minutos)<select id="slotStep" onchange="renderAvailability()"><option value="5">5 min</option><option selected value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select></label><label class="field">Seleção<select id="pickMode" onchange="renderAvailability()"><option value="manual">Escolher horários</option><option value="all">Selecionar todos os livres</option></select></label></div><div class="actions mt"><button class="btn secondary" onclick="clearSlotSelection()">Limpar seleção</button><span id="availCount" class="pill"></span></div></div><div class="panel"><h3>Horários possíveis</h3><div id="slotsList"></div></div><div class="panel"><h3>Mensagem para WhatsApp</h3><div id="messagePreview" class="preview"></div><div class="actions mt"><button class="btn" onclick="copyMessage()">Copiar mensagem</button><button class="btn secondary" onclick="sendWhatsapp()">Abrir WhatsApp</button></div><p class="note">Os horários oferecidos são alternativas, não reservas confirmadas. Após agendar uma aula, os horários livres são recalculados.</p></div></section>
-<section id="page-config" class="hidden"><div class="panel"><h2>Configurações</h2><p class="muted small">Defina sua jornada por dia. Você pode usar minutos exatos.</p><form id="settingsForm" onsubmit="saveSettings(event)"><div id="workingFields"></div><div class="grid"><label class="field">Duração padrão (min)<input type="number" min="10" max="240" id="defaultDuration" required></label><label class="field">Intervalo mínimo entre aulas (min)<input type="number" min="0" max="120" id="buffer" required></label></div><button class="btn" type="submit">Salvar configurações</button></form></div><div class="panel"><h2>Proteção de dados</h2><p class="note">Os dados ficam neste navegador, neste dispositivo. A exportação abaixo gera um arquivo de backup. Ela <b>não é automática</b> e não substitui a sincronização na nuvem.</p><div class="actions"><button class="btn" onclick="exportBackup()">Baixar backup JSON</button><label class="btn secondary" for="importFile" style="cursor:pointer">Restaurar backup</label><input id="importFile" type="file" accept="application/json,.json" class="hidden" onchange="importBackup(event)"></div><div class="divider"></div><button class="btn danger" onclick="clearAll()">Apagar todos os dados</button></div><div class="panel"><h3>Sobre esta versão</h3><p class="small muted">JF | Agenda · Protótipo funcional 0.1. Funciona offline após o primeiro acesso em hospedagem HTTPS. Ainda não há nuvem, sincronização com Google Calendar, alertas ou cálculo de deslocamentos entre academias.</p></div></section></main>
+<section id="page-disponibilidade" class="hidden"><div class="panel"><h2>Gerador de disponibilidade</h2><p class="muted small">Escolha o período, filtre os horários e selecione exatamente quais deseja enviar.</p><div class="grid"><label class="field">De<input id="fromDate" type="date" onchange="renderAvailability()"></label><label class="field">Até<input id="toDate" type="date" onchange="renderAvailability()"></label><label class="field">Turno<select id="turn" onchange="renderAvailability()"><option value="all">Todos</option><option value="afternoon">Tarde (12h–17h59)</option><option value="night">Noite (18h–23h59)</option><option value="morning">Manhã (antes das 12h)</option></select></label><label class="field">Duração da aula (minutos)<input id="slotDuration" type="number" min="10" max="240" value="50" onchange="renderAvailability()"></label><label class="field">Inícios a cada (minutos)<select id="slotStep" onchange="renderAvailability()"><option value="5">5 min</option><option selected value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select></label><label class="field">Local para a nova aula<input id="slotLocation" maxlength="80" onchange="renderAvailability()" placeholder="Academia / estúdio"></label><label class="field">A partir das (opcional)<input id="slotFrom" type="text" inputmode="numeric" placeholder="HH:MM" maxlength="5" oninput="formatClock(this)" onchange="renderAvailability()"></label><label class="field">Até as (opcional)<input id="slotUntil" type="text" inputmode="numeric" placeholder="HH:MM" maxlength="5" oninput="formatClock(this)" onchange="renderAvailability()"></label><label class="field">Seleção<select id="pickMode" onchange="renderAvailability()"><option value="manual">Escolher horários</option><option value="all">Selecionar todos os livres</option></select></label></div><fieldset><legend>Dias da semana</legend><div class="actions" id="slotDays"></div></fieldset><div class="actions mt"><button class="btn secondary" onclick="clearSlotSelection()">Limpar seleção</button><span id="availCount" class="pill"></span></div></div><div class="panel"><h3>Horários possíveis</h3><div id="slotsList"></div></div><div class="panel"><h3>Mensagem para WhatsApp</h3><div id="messagePreview" class="preview"></div><div class="actions mt"><button class="btn" onclick="copyMessage()">Copiar mensagem</button><button class="btn secondary" onclick="sendWhatsapp()">Abrir WhatsApp</button></div><p class="note">Os horários oferecidos são alternativas, não reservas confirmadas. Após agendar uma aula, os horários livres são recalculados.</p></div></section>
+<section id="page-config" class="hidden"><div class="panel"><h2>Configurações</h2><p class="muted small">Defina sua jornada por dia. Você pode usar minutos exatos.</p><form id="settingsForm" onsubmit="saveSettings(event)"><div id="workingFields"></div><div class="grid"><label class="field">Duração padrão (min)<input type="number" min="10" max="240" id="defaultDuration" required></label><label class="field">Intervalo mínimo entre aulas (min)<input type="number" min="0" max="120" id="buffer" required></label></div><label class="field">Tempo entre locais diferentes (min)<input type="number" min="0" max="240" id="travel" required></label><button class="btn" type="submit">Salvar configurações</button></form></div><div class="panel"><h2>Proteção de dados</h2><p class="note">Os dados ficam neste navegador, neste dispositivo. A exportação abaixo gera um arquivo de backup. Guarde uma cópia fora do navegador. Na primeira abertura, a v0.2 copia os dados locais da v0.1 e conserva o original.</p><div class="actions"><button class="btn" onclick="exportBackup()">Baixar backup JSON</button><label class="btn secondary" for="importFile" style="cursor:pointer">Restaurar backup</label><input id="importFile" type="file" accept="application/json,.json" class="hidden" onchange="importBackup(event)"></div><div class="divider"></div><button class="btn danger" onclick="clearAll()">Esvaziar agenda atual</button></div><div class="panel"><h3>Sobre esta versão</h3><p class="small muted">JF | Agenda · Versão 0.2 · Funciona offline após o primeiro acesso em hospedagem HTTPS. Dados e backups ficam sob seu controle neste dispositivo.</p></div></section></main>
 <nav class="topnav" aria-label="Menu principal"><button data-page="agenda" onclick="showPage('agenda')" class="active">▦<br>Agenda</button><button data-page="alunos" onclick="showPage('alunos')">♙<br>Alunos</button><button data-page="disponibilidade" onclick="showPage('disponibilidade')">◷<br>Horários</button><button data-page="config" onclick="showPage('config')">⚙<br>Ajustes</button></nav>
-<dialog id="appointmentDialog"><form onsubmit="saveAppointment(event)" id="appointmentForm"><h2 id="appointmentTitle">Novo atendimento</h2><label class="field">Aluno<select name="studentId" id="appointmentStudent" required></select></label><div class="grid"><label class="field">Data<input name="date" id="appointmentDate" type="date" required></label><label class="field">Início<input name="start" type="time" required></label><label class="field">Fim<input name="end" type="time" required></label><label class="field">Tipo<select name="recurrence"><option value="once">Somente nesta data</option><option value="weekly">Toda semana neste dia</option></select></label></div><label class="field">Local (opcional)<input name="location" placeholder="Academia / estúdio" maxlength="80"></label><div class="actions mt"><button class="btn" type="submit">Salvar atendimento</button><button class="btn secondary" type="button" onclick="document.getElementById('appointmentDialog').close()">Cancelar</button></div></form></dialog>
+<dialog id="appointmentDialog">
+  <form id="appointmentForm" onsubmit="saveAppointment(event)">
+    <h2 id="appointmentTitle">Novo atendimento</h2>
+    <p id="appointmentContext" class="note hidden"></p>
+    <label class="field" id="studentField">Aluno<select name="studentId" id="appointmentStudent"></select></label>
+    <label class="field hidden" id="blockField">Motivo<input name="reason" maxlength="100" placeholder="Ex.: compromisso pessoal"></label>
+    <div class="grid">
+      <label class="field"><span id="dateLabel">Data</span><input name="date" type="date" required></label>
+      <label class="field hidden" id="weekdayField">Dia da semana<select name="weekday"></select></label>
+      <label class="field">Início<input name="start" type="text" class="clock" inputmode="numeric" maxlength="5" placeholder="HH:MM" oninput="formatClock(this)" required></label>
+      <label class="field">Fim<input name="end" type="text" class="clock" inputmode="numeric" maxlength="5" placeholder="HH:MM" oninput="formatClock(this)" required></label>
+      <label class="field hidden" id="untilField">Válido até (opcional)<input name="until" type="date"></label>
+      <label class="field" id="statusField">Situação<select name="status">
+        <option value="confirmed">Confirmado</option><option value="reserved">Reserva provisória</option>
+        <option value="completed">Realizado</option><option value="missed">Falta</option>
+        <option value="makeup">Pendente de reposição</option><option value="cancelled">Cancelado</option>
+      </select></label>
+    </div>
+    <p class="muted small m0">Digite quatro números para o horário. Exemplo: 1905 vira 19:05.</p>
+    <label class="field" id="locationField">Local (opcional)<input name="location" placeholder="Academia / estúdio" maxlength="80"></label>
+    <label class="field" id="kindField">Tipo<select name="kind"><option value="lesson">Atendimento</option><option value="makeup">Reposição</option><option value="trial">Experimental</option></select></label>
+    <p id="appointmentError" class="note hidden" role="alert" tabindex="-1"></p>
+    <div class="actions mt">
+      <button class="btn" type="submit">Salvar</button>
+      <button class="btn secondary" type="button" onclick="document.getElementById('appointmentDialog').close()">Voltar</button>
+    </div>
+  </form>
+</dialog>
 <script>
 'use strict';
-const STORAGE='jf-agenda-v01'; const weekdays=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-const defaultData=()=>({version:1,students:[],appointments:[],exceptions:[],settings:{duration:50,buffer:0,working:[{on:false,start:'14:00',end:'21:00'},{on:true,start:'14:00',end:'21:00'},{on:true,start:'14:00',end:'21:00'},{on:true,start:'14:00',end:'21:00'},{on:true,start:'14:00',end:'21:00'},{on:true,start:'14:00',end:'21:00'},{on:false,start:'14:00',end:'21:00'}]}});
-let data=load(), selectedSlots=new Set(), visibleSlots=[];
-function load(){try{let x=JSON.parse(localStorage.getItem(STORAGE));return validData(x)?x:defaultData()}catch{return defaultData()}}
-function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(data))}catch(e){alert('Não foi possível salvar. Exporte um backup e verifique o armazenamento.');throw e}}
-function validData(x){return !!(x&&x.version===1&&Array.isArray(x.students)&&Array.isArray(x.appointments)&&Array.isArray(x.exceptions)&&x.settings&&Array.isArray(x.settings.working)&&x.settings.working.length===7)}
+const LEGACY_STORAGE = 'jf-agenda-v01';
+const STORAGE = 'jf-agenda-v02';
+const RESTORE_STORAGE = 'jf-agenda-v02-antes-da-restauracao';
+const weekdays = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const statusLabels = {
+  confirmed: 'Confirmado', reserved: 'Reserva provisória', completed: 'Realizado',
+  missed: 'Falta', makeup: 'Pendente de reposição', cancelled: 'Cancelado'
+};
+const defaultData = () => ({
+  version: 2, students: [], appointments: [], exceptions: [],
+  settings: {
+    duration: 50, buffer: 0, travel: 0,
+    working: weekdays.map((_, day) => ({on: day > 0 && day < 6, start: '14:00', end: '21:00'}))
+  }
+});
+let data, storedRaw, storageError = '', selectedSlots = new Set(), visibleSlots = [];
+
+function isDate(value) {
+  return typeof value === 'string' && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)
+    && value.slice(0, 4) !== '0000' && addDays(value, 0) === value;
+}
+function isTime(value) {
+  return typeof value === 'string' && /^(?:[01][0-9]|2[0-3]):[0-5][0-9]$/.test(value);
+}
+function validPeriod(row) {
+  return isTime(row.start) && isTime(row.end) && min(row.start) < min(row.end);
+}
+function inRange(value, low, high) {
+  return Number.isInteger(value) && value >= low && value <= high;
+}
+function isId(value) {
+  return typeof value === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(value);
+}
+function validStatus(value) {
+  return value === undefined || (typeof value === 'string' && Object.hasOwn(statusLabels, value));
+}
+function validData(value) {
+  if (!value || ![1, 2].includes(value.version)) return false;
+  const {students, appointments, exceptions, settings} = value;
+  if (![students, appointments, exceptions, settings?.working].every(Array.isArray)) return false;
+  const current = value.version === 2;
+  if (!inRange(settings.duration, 10, 240) || !inRange(settings.buffer, 0, 120)
+      || (current && !inRange(settings.travel, 0, 240)) || settings.working.length !== 7
+      || !settings.working.every(w => w && typeof w.on === 'boolean' && (!w.on || validPeriod(w)))) return false;
+  const studentIds = new Set();
+  for (const s of students) {
+    if (!s || !isId(s.id) || studentIds.has(s.id) || typeof s.name !== 'string' || !s.name.trim()) return false;
+    studentIds.add(s.id);
+  }
+  const events = new Map();
+  for (const a of appointments) {
+    if (!a || !isId(a.id) || events.has(a.id) || !isDate(a.date) || !validPeriod(a)) return false;
+    if (a.recurrence === 'block' && current) {
+      if (typeof a.reason !== 'string' || !a.reason.trim()) return false;
+    } else if (!studentIds.has(a.studentId) || !['once','weekly'].includes(a.recurrence)
+        || min(a.end) - min(a.start) > 240 || !validStatus(a.status)) return false;
+    if (a.recurrence === 'weekly' && (!inRange(a.weekday, 0, 6)
+        || (a.until && !isDate(a.until))
+        || (a.stopped && (!isDate(a.stopped) || !['paused','ended','changed'].includes(a.stopReason))))) return false;
+    events.set(a.id, a);
+  }
+  const keys = new Set();
+  for (const e of exceptions) {
+    if (!e || !isDate(e.date) || events.get(e.id)?.recurrence !== 'weekly') return false;
+    const key = e.id + '|' + e.date;
+    if (keys.has(key)) return false;
+    keys.add(key);
+    if (current && (!e.override || !isDate(e.override.date) || !validPeriod(e.override)
+        || min(e.override.end) - min(e.override.start) > 240 || !validStatus(e.override.status))) return false;
+  }
+  return true;
+}
+function upgrade(value) {
+  if (!validData(value)) throw Error('Formato inválido ou versão incompatível.');
+  if (value.version === 2) return value;
+  const rules = new Map(value.appointments.map(a => [a.id, a]));
+  const exceptions = value.exceptions.map(e => {
+    const a = rules.get(e.id);
+    return {...e, override: {date: e.date, start: a.start, end: a.end, location: a.location, status: 'cancelled'}};
+  });
+  return {...value, version: 2, exceptions, settings: {...value.settings, travel: 0}};
+}
+function load() {
+  storedRaw = localStorage.getItem(STORAGE);
+  if (storedRaw !== null) return upgrade(JSON.parse(storedRaw));
+  const legacy = localStorage.getItem(LEGACY_STORAGE);
+  if (legacy === null) return defaultData();
+  const migrated = upgrade(JSON.parse(legacy));
+  // Retain the original v0.1 value as a separate pre-migration copy.
+  const serialized = JSON.stringify(migrated);
+  localStorage.setItem(STORAGE, serialized);
+  storedRaw = serialized;
+  return migrated;
+}
+function commit(next, replacing = false) {
+  try {
+    if (!validData(next)) throw Error('Dados inválidos. Nenhuma alteração foi gravada.');
+    if (storageError && !replacing) throw Error(storageError);
+    const current = localStorage.getItem(STORAGE);
+    if (current !== storedRaw) throw Error('Os dados mudaram em outra aba. Reabra a agenda e tente novamente.');
+    if (replacing) {
+      const previous = current ?? localStorage.getItem(LEGACY_STORAGE);
+      if (previous !== null) localStorage.setItem(RESTORE_STORAGE, previous);
+    }
+    const serialized = JSON.stringify(next);
+    localStorage.setItem(STORAGE, serialized);
+    storedRaw = serialized;
+    data = next;
+    storageError = '';
+    document.getElementById('storageNotice').classList.add('hidden');
+    return true;
+  } catch (error) {
+    alert('Não foi possível salvar. ' + error.message);
+    return false;
+  }
+}
 function uid(){return Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9)}
-function pad(n){return String(n).padStart(2,'0')};function today(){let d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
-function dateObj(s){let [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)}
-function addDays(s,n){let d=dateObj(s);d.setDate(d.getDate()+n);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function pad(n){return String(n).padStart(2,'0')};function today(){let d=new Date();return `${String(d.getFullYear()).padStart(4,'0')}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function dateObj(s){let [y,m,d]=s.split('-').map(Number);let date=new Date(0);date.setHours(12,0,0,0);date.setFullYear(y,m-1,d);return date}
+function addDays(s,n){let d=dateObj(s);d.setDate(d.getDate()+n);return `${String(d.getFullYear()).padStart(4,'0')}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
 function fmtDate(s){return `${weekdays[dateObj(s).getDay()]}, ${s.split('-').reverse().join('/')}`}
 function min(s){let [h,m]=s.split(':').map(Number);return h*60+m}
 function time(n){return `${pad(Math.floor(n/60))}:${pad(n%60)}`}
 function timeLabel(n){return time(n).replace(':','h')}
 function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function fullAppointments(date){let dow=dateObj(date).getDay();return data.appointments.filter(a=> a.recurrence==='once'?a.date===date:a.recurrence==='weekly'&&a.weekday===dow&&date>=a.date&&!data.exceptions.some(e=>e.id===a.id&&e.date===date)).map(a=>({...a,startM:min(a.start),endM:min(a.end)})).sort((a,b)=>a.startM-b.startM)}
-function overlaps(start,end,otherStart,otherEnd,buffer=0){return start<otherEnd+buffer&&end>otherStart-buffer}
-function validAppointment(a,excludeId){let s=min(a.start),e=min(a.end);if(e<=s)return 'O fim precisa ser posterior ao início (sem cruzar a meia-noite).';if(e-s>240)return 'A duração máxima permitida é de 240 minutos.';let dates=a.recurrence==='weekly'?Array.from({length:56},(_,i)=>addDays(a.date,i)): [a.date];for(let date of dates){if(a.recurrence==='weekly'&&dateObj(date).getDay()!==a.weekday)continue;let busy=fullAppointments(date).filter(b=>b.id!==excludeId);if(busy.some(b=>overlaps(s,e,b.startM,b.endM,Number(data.settings.buffer))))return 'Conflito com outro atendimento (incluindo o intervalo mínimo).';}return ''}
+function weeklyOn(rule, date) {
+  return date >= rule.date && (!rule.until || date <= rule.until)
+    && (!rule.stopped || date < rule.stopped) && dateObj(date).getDay() === rule.weekday;
+}
+function occurrence(rule, date, override) {
+  const fields = override
+    ? {start: override.start, end: override.end, location: override.location, status: override.status}
+    : {};
+  return {...rule, ...fields, date: override?.date || date, originalDate: date};
+}
+function fullAppointments(date, source = data) {
+  const overrides = source.exceptions;
+  const rules = new Map(source.appointments.filter(a => a.recurrence === 'weekly').map(a => [a.id, a]));
+  const skipped = new Set(overrides.filter(e => e.date === date).map(e => e.id));
+  const events = source.appointments.filter(a => a.recurrence === 'weekly'
+    ? weeklyOn(a, date) && !skipped.has(a.id)
+    : a.date === date).map(a => a.recurrence === 'weekly' ? occurrence(a, date) : a);
+  for (const e of overrides) {
+    if (e.override.date === date) events.push(occurrence(rules.get(e.id), e.date, e.override));
+  }
+  return events.map(a => ({...a, startM: min(a.start), endM: min(a.end)})).sort((a, b) => a.startM - b.startM);
+}
+function normalizeLocation(location) {
+  return String(location || '').trim().toLocaleLowerCase('pt-BR');
+}
+function busy(event) {
+  return event.status !== 'cancelled';
+}
+function gapBetween(settings, first, second) {
+  if (first.recurrence === 'block' || second.recurrence === 'block') return 0;
+  const a = normalizeLocation(first.location);
+  const b = normalizeLocation(second.location);
+  return Math.max(settings.buffer, a && b && a !== b ? settings.travel : 0);
+}
+function collides(a, b, settings) {
+  const gap = gapBetween(settings, a, b);
+  return busy(a) && busy(b) && min(a.start) < min(b.end) + gap && min(a.end) > min(b.start) - gap;
+}
+function firstWeekday(date, day) {
+  return addDays(date, (day - dateObj(date).getDay() + 7) % 7);
+}
+function ruleLast(rule) {
+  const last = rule.stopped ? addDays(rule.stopped, -1) : '9999-12-31';
+  return rule.until && rule.until < last ? rule.until : last;
+}
+function exceptionKey(id, date) {
+  return id + '|' + date;
+}
+function conflictFor(a, source, originalDate = '') {
+  const message = date => 'Conflito com outro compromisso em ' + fmtDate(date) + ' (incluindo os intervalos configurados).';
+  const sameEvent = b => b.id === a.id && (b.originalDate || '') === originalDate;
+  if (a.recurrence !== 'weekly' || originalDate) {
+    return fullAppointments(a.date, source).some(b => !sameEvent(b) && collides(a, b, source.settings))
+      ? message(a.date) : '';
+  }
+  const rules = new Map(source.appointments.filter(b => b.recurrence === 'weekly').map(b => [b.id, b]));
+  const exceptions = new Set(source.exceptions.map(e => exceptionKey(e.id, e.date)));
+  const oneOff = source.appointments.filter(b => b.recurrence !== 'weekly');
+  oneOff.push(...source.exceptions.map(e => occurrence(rules.get(e.id), e.date, e.override)));
+  for (const b of oneOff) {
+    if (weeklyOn(a, b.date) && !exceptions.has(exceptionKey(a.id, b.date)) && collides(a, b, source.settings)) {
+      return message(b.date);
+    }
+  }
+  for (const b of rules.values()) {
+    if (a.id === b.id || a.weekday !== b.weekday || !collides(a, b, source.settings)) continue;
+    const first = a.date > b.date ? a.date : b.date;
+    const last = ruleLast(a) < ruleLast(b) ? ruleLast(a) : ruleLast(b);
+    // Only exceptions can postpone the first conflict between overlapping weekly rules.
+    for (let date = firstWeekday(first, a.weekday); isDate(date) && date <= last; date = addDays(date, 7)) {
+      if (!exceptions.has(exceptionKey(a.id, date)) && !exceptions.has(exceptionKey(b.id, date))) return message(date);
+    }
+  }
+  return '';
+}
+function freeIntervals(date, location = '') {
+  const settings = data.settings;
+  const work = settings.working[dateObj(date).getDay()];
+  if (!work.on) return [];
+  const from = min(work.start), to = min(work.end);
+  const blocks = fullAppointments(date).filter(busy).map(a => {
+    const gap = gapBetween(settings, {location}, a);
+    return [Math.max(from, a.startM - gap), Math.min(to, a.endM + gap)];
+  }).filter(([start, end]) => start < end).sort((a, b) => a[0] - b[0]);
+  const result = [];
+  let cursor = from;
+  for (const [start, end] of blocks) {
+    if (start > cursor) result.push([cursor, start]);
+    cursor = Math.max(cursor, end);
+  }
+  if (cursor < to) result.push([cursor, to]);
+  return result;
+}
+
 function showPage(page){document.querySelectorAll('main section').forEach(el=>el.classList.toggle('hidden',el.id!==`page-${page}`));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));({agenda:renderAgenda,alunos:renderStudents,disponibilidade:renderAvailability,config:renderSettings})[page]();window.scrollTo({top:0,behavior:'instant'})}
 function getStudent(id){return data.students.find(x=>x.id===id)?.name||'Aluno não encontrado'}
-function renderAgenda(){let date=document.getElementById('agendaDate').value||today();let dates=document.getElementById('agendaMode').value==='week'?Array.from({length:7},(_,i)=>addDays(date,i)):[date];let html='',total=0,free=0;for(let d of dates){let events=fullAppointments(d),work=data.settings.working[dateObj(d).getDay()],intervals=freeIntervals(d);total+=events.length;free+=intervals.reduce((acc,x)=>acc+x[1]-x[0],0);html+=`<div class="dayhead">${safe(fmtDate(d))}</div>`;if(!events.length)html+='<div class="muted small mt">Nenhum atendimento marcado.</div>';for(let a of events){html+=`<div class="item"><div class="item-main"><div class="time">${safe(a.start)}–${safe(a.end)} · ${safe(getStudent(a.studentId))}</div><div class="small muted">${safe(a.location||'Local não informado')} · ${a.recurrence==='weekly'?'Semanal':'Avulso'}</div></div><div class="actions"><button class="btn secondary tiny" onclick="editAppointment('${a.id}')">Editar</button><button class="btn danger tiny" onclick="deleteAppointment('${a.id}','${d}')">${a.recurrence==='weekly'?'Cancelar…':'Excluir'}</button></div></div>`}if(work.on)html+=`<div class="small muted mt">Intervalos livres: ${intervals.length?intervals.map(x=>time(x[0])+'–'+time(x[1])).join(' · '):'Nenhum'}</div>`;else html+='<div class="small muted mt">Dia desativado nas configurações.</div>'}
-document.getElementById('agendaItems').innerHTML=html;document.getElementById('agendaStats').innerHTML=`<div class="stat"><strong>${total}</strong><span>Atendimentos</span></div><div class="stat"><strong>${Math.floor(free/60)}h${pad(free%60)}</strong><span>Tempo livre bruto</span></div><div class="stat"><strong>${dates.length}</strong><span>Dia(s) exibido(s)</span></div>`}
-function freeIntervals(date){let w=data.settings.working[dateObj(date).getDay()];if(!w.on)return [];let from=min(w.start),to=min(w.end);if(to<=from)return [];let buf=Math.max(0,Number(data.settings.buffer)||0);let blocks=fullAppointments(date).map(a=>[Math.max(from,a.startM-buf),Math.min(to,a.endM+buf)]).filter(b=>b[1]>from&&b[0]<to).sort((a,b)=>a[0]-b[0]);let result=[],cursor=from;for(let b of blocks){if(b[0]>cursor)result.push([cursor,b[0]]);cursor=Math.max(cursor,b[1])}if(cursor<to)result.push([cursor,to]);return result}
-function renderStudents(){let opts='<option value="">Selecione...</option>'+data.students.map(s=>`<option value="${safe(s.id)}">${safe(s.name)}</option>`).join('');document.getElementById('appointmentStudent').innerHTML=opts;document.getElementById('studentsList').innerHTML=data.students.length?data.students.map(s=>`<div class="item"><div><b>${safe(s.name)}</b><div class="small muted">${safe(s.phone||'Sem telefone')}</div></div><button class="btn danger tiny" onclick="deleteStudent('${s.id}')">Excluir</button></div>`).join(''):'<div class="empty">Nenhum aluno cadastrado.</div>'}
-function addStudent(e){e.preventDefault();let f=new FormData(e.target),name=String(f.get('name')).trim(),phone=String(f.get('phone')).trim();if(!name)return;data.students.push({id:uid(),name,phone});persist();e.target.reset();renderStudents()}
-function deleteStudent(id){if(data.appointments.some(a=>a.studentId===id)){alert('Este aluno possui atendimentos. Exclua os atendimentos antes de remover o cadastro.');return}if(confirm('Excluir este aluno?')){data.students=data.students.filter(x=>x.id!==id);persist();renderStudents()}}
-function openAppointment(id=null){if(!data.students.length){alert('Cadastre um aluno primeiro.');showPage('alunos');return}renderStudents();let a=id?data.appointments.find(x=>x.id===id):null;let f=document.getElementById('appointmentForm');f.reset();f.dataset.editId=id||'';f.elements.studentId.value=a?.studentId||'';f.elements.date.value=a?.date||document.getElementById('agendaDate').value||today();f.elements.start.value=a?.start||'15:00';f.elements.end.value=a?.end||'15:50';f.elements.recurrence.value=a?.recurrence||'once';f.elements.location.value=a?.location||'';document.getElementById('appointmentTitle').textContent=a?'Editar atendimento':'Novo atendimento';document.getElementById('appointmentDialog').showModal()}
-function editAppointment(id){openAppointment(id)}
-function saveAppointment(e){e.preventDefault();let f=e.target,fd=new FormData(f),id=f.dataset.editId;let a={id:id||uid(),studentId:String(fd.get('studentId')),date:String(fd.get('date')),start:String(fd.get('start')),end:String(fd.get('end')),recurrence:String(fd.get('recurrence')),location:String(fd.get('location')).trim()};a.weekday=dateObj(a.date).getDay();if(!data.students.some(s=>s.id===a.studentId))return alert('Selecione um aluno válido.');let err=validAppointment(a,id);if(err)return alert(err);if(id){data.appointments=data.appointments.map(x=>x.id===id?a:x);data.exceptions=data.exceptions.filter(x=>x.id!==id)}else data.appointments.push(a);persist();document.getElementById('appointmentDialog').close();renderAgenda()}
-function deleteAppointment(id,date){let a=data.appointments.find(x=>x.id===id);if(!a)return;if(a.recurrence==='weekly'){let only=confirm('OK = cancelar apenas esta data.\nCancelar = escolher outra opção.');if(only){if(!data.exceptions.some(x=>x.id===id&&x.date===date))data.exceptions.push({id,date});persist();renderAgenda();return}if(!confirm('Deseja EXCLUIR a recorrência inteira a partir do cadastro?'))return}else if(!confirm('Excluir este atendimento?'))return;data.appointments=data.appointments.filter(x=>x.id!==id);data.exceptions=data.exceptions.filter(x=>x.id!==id);persist();renderAgenda()}
-function renderAvailability(){let from=document.getElementById('fromDate').value||today(),to=document.getElementById('toDate').value||from;let duration=Number(document.getElementById('slotDuration').value),step=Number(document.getElementById('slotStep').value),turn=document.getElementById('turn').value,mode=document.getElementById('pickMode').value;if(!Number.isInteger(duration)||duration<10||duration>240||to<from||((dateObj(to)-dateObj(from))/86400000)>60){document.getElementById('slotsList').innerHTML='<p class="note">Informe um período válido de até 61 dias e duração entre 10 e 240 minutos.</p>';visibleSlots=[];renderMessage();return}let dates=[];for(let date=from;date<=to;date=addDays(date,1))dates.push(date);visibleSlots=[];let html='';for(let date of dates){let available=[];for(let [start,end] of freeIntervals(date)){for(let m=start;m+duration<=end;m+=step){let hour=m/60;if(turn==='afternoon'&&(hour<12||hour>=18))continue;if(turn==='night'&&hour<18)continue;if(turn==='morning'&&hour>=12)continue;let key=date+'|'+m;available.push({key,date,start:m,end:m+duration});visibleSlots.push({key,date,start:m,end:m+duration})}}if(available.length)html+=`<div class="dayhead">${safe(fmtDate(date))}</div><div class="slots mt">${available.map(s=>`<button class="slot ${mode==='all'||selectedSlots.has(s.key)?'selected':''}" onclick="toggleSlot('${s.key}')">${time(s.start)}–${time(s.end)}</button>`).join('')}</div>`}document.getElementById('slotsList').innerHTML=html||'<div class="empty">Nenhum horário disponível com esses filtros.</div>';renderMessage()}
-function toggleSlot(key){if(document.getElementById('pickMode').value==='all'){document.getElementById('pickMode').value='manual';selectedSlots=new Set(visibleSlots.map(s=>s.key))}if(selectedSlots.has(key))selectedSlots.delete(key);else selectedSlots.add(key);renderAvailability()}
+function renderAgenda() {
+  const date = document.getElementById('agendaDate').value || today();
+  const days = document.getElementById('agendaMode').value === 'week' ? 7 : 1;
+  const dates = Array.from({length: days}, (_, i) => addDays(date, i)).filter(isDate);
+  let total = 0, free = 0;
+  const html = dates.map(d => {
+    const events = fullAppointments(d);
+    const work = data.settings.working[dateObj(d).getDay()];
+    const intervals = freeIntervals(d);
+    total += events.filter(a => a.recurrence !== 'block' && busy(a)).length;
+    free += intervals.reduce((acc, [start, end]) => acc + end - start, 0);
+    const rows = events.map(a => {
+      const block = a.recurrence === 'block';
+      const weekly = a.recurrence === 'weekly';
+      const kind = a.kind === 'makeup' ? 'Reposição' : a.kind === 'trial' ? 'Experimental' : weekly ? 'Fixo semanal' : 'Avulso';
+      const moved = weekly && a.originalDate !== a.date ? ' · Remarcado de ' + fmtDate(a.originalDate) : '';
+      const metadata = block ? 'Bloqueio' : [a.location || 'Local não informado', kind, statusLabels[a.status || 'confirmed']].join(' · ') + moved;
+      const edit = weekly
+        ? `openAppointment({mode:'occurrence',id:'${a.id}',date:'${a.originalDate}'})`
+        : `openAppointment({mode:'${block ? 'block' : 'once'}',id:'${a.id}'})`;
+      const remove = !weekly ? `<button class="btn danger tiny" onclick="removeAppointment('${a.id}')">Excluir</button>` : '';
+      return `<div class="item ${busy(a) ? '' : 'cancelled'}">
+        <div class="item-main"><div class="time">${a.start}–${a.end} · ${safe(block ? a.reason : getStudent(a.studentId))}</div>
+        <div class="small muted">${safe(metadata)}</div></div>
+        <div class="actions"><button class="btn secondary tiny" onclick="${edit}">${weekly ? 'Editar esta aula' : 'Editar'}</button>${remove}</div>
+      </div>`;
+    }).join('');
+    const availability = work.on
+      ? 'Intervalos livres: ' + (intervals.map(([s,e]) => time(s)+'–'+time(e)).join(' · ') || 'Nenhum')
+      : 'Dia desativado nas configurações.';
+    return `<div class="dayhead">${fmtDate(d)}</div>${rows || '<div class="muted small mt">Nenhum compromisso marcado.</div>'}
+      <div class="small muted mt">${availability}</div>`;
+  }).join('');
+  document.getElementById('agendaItems').innerHTML = html;
+  document.getElementById('agendaStats').innerHTML = `<div class="stat"><strong>${total}</strong><span>Atendimentos</span></div>
+    <div class="stat"><strong>${Math.floor(free/60)}h${pad(free%60)}</strong><span>Tempo livre bruto</span></div>
+    <div class="stat"><strong>${dates.length}</strong><span>Dia(s) exibido(s)</span></div>`;
+}
+function renderStudents() {
+  document.getElementById('appointmentStudent').innerHTML = '<option value="">Selecione...</option>'
+    + data.students.map(s => `<option value="${s.id}">${safe(s.name)}</option>`).join('');
+  const expanded = new Set([...document.querySelectorAll('#studentsList details[open]')].map(el => el.dataset.student));
+  document.getElementById('studentsList').innerHTML = data.students.map(s => {
+    const rules = data.appointments.filter(a => a.studentId === s.id && a.recurrence === 'weekly');
+    const sorted = [...rules].sort((a, b) => a.weekday - b.weekday || a.start.localeCompare(b.start));
+    const rows = sorted.map(a => {
+      const state = a.stopped ? {paused:'Pausado', ended:'Encerrado', changed:'Versão anterior'}[a.stopReason]
+        : a.until && a.until < today() ? 'Encerrado' : 'Ativo';
+      const stop = a.stopped ? ' · interrompido em ' + fmtDate(a.stopped) : '';
+      const until = a.until ? ' · até ' + fmtDate(a.until) : '';
+      const action = state === 'Ativo'
+        ? `<button class="btn secondary tiny" onclick="openAppointment({mode:'future',id:'${a.id}'})">Alterar daqui em diante</button>
+           <button class="btn secondary tiny" onclick="openAppointment({mode:'series',id:'${a.id}'})">Editar série</button>
+           <button class="btn secondary tiny" onclick="stopRule('${a.id}','paused')">Pausar</button>
+           <button class="btn danger tiny" onclick="stopRule('${a.id}','ended')">Encerrar</button>`
+        : a.stopReason === 'paused' && !a.resumed
+          ? `<button class="btn secondary tiny" onclick="openAppointment({mode:'resume',id:'${a.id}'})">Retomar</button>`
+          : '';
+      return `<div class="item"><div class="item-main"><b>${weekdays[a.weekday]} · ${a.start}–${a.end}</b>
+        <div class="small muted">${safe(a.location || 'Local não informado')} · desde ${fmtDate(a.date)}${until}${stop}</div>
+        <span class="small status">${state}${a.resumed ? ' · retomado em nova regra' : ''}</span></div><div class="actions">${action}</div></div>`;
+    }).join('');
+    return `<div class="item"><div class="item-main"><b>${safe(s.name)}</b><div class="small muted">${safe(s.phone || 'Sem telefone')}</div>
+      <details class="mt" data-student="${s.id}" ${expanded.has(s.id) ? 'open' : ''}>
+        <summary>Horários fixos (${rules.filter(a => !a.stopped && (!a.until || a.until >= today())).length} ativos)</summary>
+        <div class="grade">${rows || '<p class="small muted">Nenhum horário fixo cadastrado.</p>'}
+        <button class="btn tiny mt" onclick="openAppointment({mode:'weekly',studentId:'${s.id}'})">+ Horário fixo</button></div>
+      </details></div><button class="btn danger tiny" onclick="deleteStudent('${s.id}')">Excluir</button></div>`;
+  }).join('') || '<div class="empty">Nenhum aluno cadastrado.</div>';
+}
+function addStudent(event) {
+  event.preventDefault();
+  const fields = new FormData(event.target);
+  const name = fields.get('name').trim(), phone = fields.get('phone').trim();
+  if (name && commit({...data, students: [...data.students, {id: uid(), name, phone}]})) {
+    event.target.reset();
+    renderStudents();
+  }
+}
+function deleteStudent(id) {
+  if (data.appointments.some(a => a.studentId === id)) return alert('Este aluno possui registros na agenda.');
+  if (confirm('Excluir este aluno?') && commit({...data, students: data.students.filter(s => s.id !== id)})) renderStudents();
+}
+function formatClock(input) {
+  const digits = input.value.replace(/[^0-9]/g, '').slice(0, 4);
+  const formatted = digits.length > 2 ? digits.slice(0, 2) + ':' + digits.slice(2) : digits;
+  if (formatted !== input.value) input.value = formatted;
+}
+function openAppointment(options = {}) {
+  const {mode = 'once', id = '', date = '', studentId = ''} = options;
+  if (mode !== 'block' && !data.students.length) {
+    alert('Cadastre um aluno primeiro.');
+    showPage('alunos');
+    return;
+  }
+  renderStudents();
+  const rule = data.appointments.find(a => a.id === id);
+  if (id && !rule) return;
+  const override = mode === 'occurrence' ? data.exceptions.find(e => e.id === id && e.date === date)?.override : null;
+  const value = override || rule;
+  const weekly = ['weekly','future','resume','series'].includes(mode);
+  const block = mode === 'block';
+  const form = document.getElementById('appointmentForm');
+  const f = form.elements;
+  form.reset();
+  Object.assign(form.dataset, {mode, id, date});
+  f.studentId.value = rule?.studentId || studentId;
+  f.studentId.required = !block;
+  f.studentId.disabled = weekly || mode === 'occurrence';
+  f.date.value = ({
+    occurrence: override?.date || date,
+    future: rule?.date > today() ? rule.date : today(),
+    resume: rule?.stopped > today() ? rule.stopped : today()
+  })[mode] || rule?.date || document.getElementById('agendaDate').value || today();
+  f.weekday.value = rule?.weekday ?? dateObj(f.date.value).getDay();
+  f.start.value = value?.start || '15:00';
+  f.end.value = value?.end || time(Math.min(1439, 900 + data.settings.duration));
+  f.location.value = value?.location || '';
+  f.status.value = value?.status || 'confirmed';
+  f.kind.value = rule?.kind || 'lesson';
+  f.reason.value = rule?.reason || '';
+  f.until.value = mode === 'resume' ? '' : rule?.until || '';
+  for (const [field, hidden] of Object.entries({
+    studentField: block, blockField: !block, weekdayField: !weekly, untilField: !weekly,
+    locationField: block, statusField: block || weekly, kindField: block || weekly || mode === 'occurrence'
+  })) document.getElementById(field).classList.toggle('hidden', hidden);
+  document.getElementById('dateLabel').textContent = weekly ? 'Vigência a partir de' : 'Data';
+  document.getElementById('appointmentTitle').textContent = ({
+    block: id ? 'Editar bloqueio' : 'Novo bloqueio', once: id ? 'Editar avulso' : 'Novo avulso',
+    weekly: 'Novo horário fixo', occurrence: 'Editar esta aula', future: 'Alterar daqui em diante',
+    resume: 'Retomar horário fixo', series: 'Editar toda a série'
+  })[mode];
+  const context = ({
+    occurrence: 'Aula original de ' + (date ? fmtDate(date) : '') + '. Para cancelar, escolha a situação Cancelado.',
+    future: 'O novo horário vale a partir da data informada. As aulas anteriores e as alterações pontuais ficam registradas.',
+    series: 'Esta edição pode alterar aulas passadas. Cancelamentos e outras alterações pontuais ficam registrados.'
+  })[mode];
+  const note = document.getElementById('appointmentContext');
+  note.textContent = context || '';
+  note.classList.toggle('hidden', !context);
+  document.getElementById('appointmentError').classList.add('hidden');
+  document.getElementById('appointmentDialog').showModal();
+}
+function appointmentError(message) {
+  const box = document.getElementById('appointmentError');
+  box.textContent = message;
+  box.classList.remove('hidden');
+  box.focus();
+}
+function applyWeekly(next, a, old, mode, from) {
+  if (mode === 'future') {
+    if (from < old.date || !weeklyOn(old, firstWeekday(from, old.weekday))) {
+      return 'Escolha uma data dentro da vigência da série.';
+    }
+    next.appointments = next.appointments.map(b => b.id === old.id ? {...b, stopped: from, stopReason: 'changed'} : b);
+  }
+  if (mode === 'resume') {
+    if (old.resumed) return 'Este horário já foi retomado.';
+    next.appointments = next.appointments.map(b => b.id === old.id ? {...b, resumed: true} : b);
+  }
+  if (mode === 'future' || mode === 'resume') {
+    // Relink equivalent occurrences; detached exceptions retain their recorded date and time.
+    next.exceptions = next.exceptions.map(e => e.id === old.id && e.date >= from && weeklyOn(a, e.date)
+      ? {...e, id: a.id} : e);
+  }
+  next.appointments = next.appointments.filter(b => b.id !== a.id).concat(a);
+  return conflictFor(a, next);
+}
+function saveAppointment(event) {
+  event.preventDefault();
+  const form = event.target;
+  const {mode, id, date: original} = form.dataset;
+  const old = data.appointments.find(a => a.id === id);
+  const f = new FormData(form);
+  const fields = {date: f.get('date'), start: f.get('start'), end: f.get('end'), location: f.get('location').trim()};
+  if (!isDate(fields.date)) return appointmentError('Informe uma data válida.');
+  if (!validPeriod(fields)) return appointmentError('Informe os horários no formato HH:MM, com o fim depois do início.');
+  if (mode !== 'block' && min(fields.end) - min(fields.start) > 240) return appointmentError('A duração máxima é de 240 minutos.');
+  const next = {...data};
+  const stamp = new Date().toISOString();
+  let conflict;
+  if (mode === 'occurrence') {
+    const override = {...fields, status: f.get('status')};
+    const saved = data.exceptions.find(e => e.id === id && e.date === original);
+    if (!saved && !weeklyOn(old, original)) return appointmentError('Esta ocorrência já mudou. Reabra a agenda.');
+    next.exceptions = data.exceptions.filter(e => !(e.id === id && e.date === original))
+      .concat({id, date: original, override, updatedAt: stamp});
+    conflict = conflictFor(occurrence(old, original, override), next, original);
+  } else {
+    const weekly = ['weekly','future','resume','series'].includes(mode);
+    const newId = id && !['future','resume'].includes(mode) ? id : uid();
+    const a = {
+      ...(newId === id ? old : {}), ...fields, id: newId, updatedAt: stamp,
+      createdAt: newId === id && old?.createdAt || stamp,
+      recurrence: weekly ? 'weekly' : mode
+    };
+    if (mode === 'block') {
+      a.reason = f.get('reason').trim();
+      if (!a.reason) return appointmentError('Informe o motivo do bloqueio.');
+    } else {
+      a.studentId = weekly ? form.elements.studentId.value : f.get('studentId');
+      if (!data.students.some(s => s.id === a.studentId)) return appointmentError('Selecione um aluno.');
+    }
+    if (weekly) {
+      a.weekday = Number(f.get('weekday'));
+      a.until = f.get('until');
+      const first = firstWeekday(a.date, a.weekday);
+      if (!isDate(first) || (a.until && (!isDate(a.until) || a.until < first))) {
+        return appointmentError('A vigência precisa incluir pelo menos uma aula no dia da semana escolhido.');
+      }
+      if (mode === 'resume' && a.date < old.stopped) return appointmentError('A retomada deve começar após o início da pausa.');
+      conflict = applyWeekly(next, a, old, mode, a.date);
+    } else {
+      if (mode !== 'block') {
+        a.status = f.get('status');
+        a.kind = f.get('kind');
+      }
+      next.appointments = data.appointments.filter(b => b.id !== a.id).concat(a);
+      conflict = conflictFor(a, next);
+    }
+  }
+  if (conflict) return appointmentError(conflict);
+  if (mode === 'series' && !confirm('Editar toda a série? Os horários calculados de aulas passadas também podem mudar.')) return;
+  if (commit(next)) {
+    document.getElementById('appointmentDialog').close();
+    refreshSchedule();
+  }
+}
+function stopRule(id, stopReason) {
+  const rule = data.appointments.find(a => a.id === id && a.recurrence === 'weekly');
+  if (!rule || rule.stopped) return;
+  const paused = stopReason === 'paused';
+  if (!confirm((paused ? 'Pausar' : 'Encerrar') + ' a série a partir de hoje? As aulas anteriores e as alterações pontuais ficam registradas.')) return;
+  const appointments = data.appointments.map(a => a.id === id
+    ? {...a, stopped: today(), stopReason, updatedAt: new Date().toISOString()} : a);
+  if (commit({...data, appointments})) refreshSchedule();
+}
+function removeAppointment(id) {
+  if (!confirm('Excluir este compromisso?')) return;
+  if (commit({...data, appointments: data.appointments.filter(a => a.id !== id)})) refreshSchedule();
+}
+function refreshSchedule() {
+  renderStudents();
+  renderAgenda();
+  renderAvailability();
+}
+
+
+function renderAvailability() {
+  const get = id => document.getElementById(id).value;
+  const from = get('fromDate') || today(), to = get('toDate') || from;
+  const duration = Number(get('slotDuration')), step = Number(get('slotStep'));
+  const turn = get('turn'), mode = get('pickMode'), location = get('slotLocation');
+  const earliest = get('slotFrom'), latest = get('slotUntil');
+  const limit = addDays(from, 60);
+  const daySelection = new Set([...document.querySelectorAll('#slotDays input:checked')].map(el => Number(el.value)));
+  visibleSlots = [];
+  const list = document.getElementById('slotsList');
+  if (!isDate(from) || !isDate(to) || to < from || (isDate(limit) && to > limit)
+      || !inRange(duration, 10, 240) || !inRange(step, 1, 60)) {
+    list.innerHTML = '<p class="note">Informe um período de até 61 dias e duração entre 10 e 240 minutos.</p>';
+  } else if ((earliest && !isTime(earliest)) || (latest && !isTime(latest))
+      || (earliest && latest && min(earliest) >= min(latest))) {
+    list.innerHTML = '<p class="note">Use HH:MM e informe um horário final posterior ao inicial.</p>';
+  } else {
+    const groups = [];
+    const turnBounds = {all: [0, 1440], morning: [0, 720], afternoon: [720, 1080], night: [1080, 1440]};
+    const [turnStart, turnEnd] = turnBounds[turn];
+    const lower = earliest ? min(earliest) : 0;
+    const upper = latest ? min(latest) : 1440;
+    for (let date = from; isDate(date) && date <= to; date = addDays(date, 1)) {
+      if (!daySelection.has(dateObj(date).getDay())) continue;
+      const available = [];
+      for (const [start, end] of freeIntervals(date, location)) {
+        for (let m = Math.max(start, lower); m + duration <= Math.min(end, upper); m += step) {
+          if (m < turnStart || m >= turnEnd) continue;
+          const key = date + '|' + m;
+          available.push({key, date, start: m, end: m + duration});
+        }
+      }
+      visibleSlots.push(...available);
+      if (available.length) groups.push(`<div class="dayhead">${fmtDate(date)}</div><div class="slots mt">${available.map(s => {
+        const selected = mode === 'all' || selectedSlots.has(s.key);
+        return `<button class="slot ${selected ? 'selected' : ''}" data-slot="${s.key}" aria-pressed="${selected}" onclick="toggleSlot(this)">${time(s.start)}–${time(s.end)}</button>`;
+      }).join('')}</div>`);
+    }
+    list.innerHTML = groups.join('') || '<div class="empty">Nenhum horário disponível com esses filtros.</div>';
+  }
+  renderMessage();
+}
+
+function toggleSlot(button){const key=button.dataset.slot;if(document.getElementById('pickMode').value==='all'){document.getElementById('pickMode').value='manual';selectedSlots=new Set(visibleSlots.map(s=>s.key))}if(selectedSlots.has(key))selectedSlots.delete(key);else selectedSlots.add(key);renderAvailability()}
 function clearSlotSelection(){document.getElementById('pickMode').value='manual';selectedSlots.clear();renderAvailability()}
 function chosen(){return visibleSlots.filter(s=>document.getElementById('pickMode').value==='all'||selectedSlots.has(s.key))}
-function makeMessage(){let sel=chosen();if(!sel.length)return 'Selecione os horários que deseja oferecer.';let g={};for(let s of sel)(g[s.date]??=[]).push(s);return 'Olá! Tenho estes horários disponíveis para atendimento:\n\n'+Object.entries(g).map(([date,x])=>'📅 '+fmtDate(date)+'\n'+x.map(s=>'• '+timeLabel(s.start)+' às '+timeLabel(s.end)).join('\n')).join('\n\n')+'\n\nQual fica melhor para você?'}
+function makeMessage(){let sel=chosen();if(!sel.length)return 'Selecione os horários que deseja oferecer.';let g={};for(let s of sel)(g[s.date]??=[]).push(s);const location = document.getElementById('slotLocation').value.trim();return 'Olá! Tenho estes horários disponíveis para atendimento'+(location?' em '+location:'')+':\n\n'+Object.entries(g).map(([date,x])=>'📅 '+fmtDate(date)+'\n'+x.map(s=>'• '+timeLabel(s.start)+' às '+timeLabel(s.end)).join('\n')).join('\n\n')+'\n\nQual fica melhor para você?'}
 function renderMessage(){document.getElementById('availCount').textContent=`${chosen().length} selecionados · ${visibleSlots.length} opções`;document.getElementById('messagePreview').textContent=makeMessage()}
 async function copyMessage(){if(!chosen().length)return alert('Escolha pelo menos um horário.');try{await navigator.clipboard.writeText(makeMessage());alert('Mensagem copiada!')}catch{alert('O navegador não permitiu copiar automaticamente. Selecione o texto da prévia e copie manualmente.')}}
 function sendWhatsapp(){if(!chosen().length)return alert('Escolha pelo menos um horário.');window.open('https://wa.me/?text='+encodeURIComponent(makeMessage()),'_blank','noopener')}
-function renderSettings(){document.getElementById('defaultDuration').value=data.settings.duration;document.getElementById('buffer').value=data.settings.buffer;document.getElementById('workingFields').innerHTML=data.settings.working.map((w,i)=>`<div class="item"><label class="rowcheck" style="min-width:96px"><input class="checkbox" type="checkbox" id="wd${i}" ${w.on?'checked':''}>${weekdays[i]}</label><div class="grid" style="flex:1"><input aria-label="Início ${weekdays[i]}" type="time" id="ws${i}" value="${safe(w.start)}"><input aria-label="Fim ${weekdays[i]}" type="time" id="we${i}" value="${safe(w.end)}"></div></div>`).join('')}
-function saveSettings(e){e.preventDefault();let working=weekdays.map((_,i)=>({on:document.getElementById('wd'+i).checked,start:document.getElementById('ws'+i).value,end:document.getElementById('we'+i).value}));if(working.some(w=>w.on&&min(w.end)<=min(w.start)))return alert('O horário de fim deve ser posterior ao início.');let duration=Number(document.getElementById('defaultDuration').value),buffer=Number(document.getElementById('buffer').value);if(!Number.isInteger(duration)||duration<10||duration>240||!Number.isInteger(buffer)||buffer<0||buffer>120)return alert('Confira duração e intervalo.');data.settings={working,duration,buffer};document.getElementById('slotDuration').value=duration;persist();alert('Configurações salvas!')}
+function renderSettings() {
+  document.getElementById('defaultDuration').value = data.settings.duration;
+  document.getElementById('buffer').value = data.settings.buffer;
+  document.getElementById('travel').value = data.settings.travel;
+  document.getElementById('workingFields').innerHTML = data.settings.working.map((w,i) => `<div class="item settings-day">
+    <label class="rowcheck"><input class="checkbox" type="checkbox" id="wd${i}" ${w.on?'checked':''}>${weekdays[i]}</label>
+    <div class="grid">
+      <label class="field">Início<input type="text" class="clock" inputmode="numeric" maxlength="5" placeholder="HH:MM" oninput="formatClock(this)" id="ws${i}" value="${safe(w.start)}"></label>
+      <label class="field">Fim<input type="text" class="clock" inputmode="numeric" maxlength="5" placeholder="HH:MM" oninput="formatClock(this)" id="we${i}" value="${safe(w.end)}"></label>
+    </div></div>`).join('');
+}
+function saveSettings(event) {
+  event.preventDefault();
+  const get = id => document.getElementById(id);
+  const working = weekdays.map((_,i) => ({on: get('wd'+i).checked, start: get('ws'+i).value, end: get('we'+i).value}));
+  if (working.some(w => w.on && !validPeriod(w))) return alert('Use HH:MM e informe um fim posterior ao início para cada dia ativo.');
+  const duration = Number(get('defaultDuration').value), buffer = Number(get('buffer').value), travel = Number(get('travel').value);
+  if (!inRange(duration, 10, 240) || !inRange(buffer, 0, 120) || !inRange(travel, 0, 240)) return alert('Confira a duração e os intervalos.');
+  if (commit({...data, settings: {...data.settings, working, duration, buffer, travel}})) {
+    get('slotDuration').value = duration;
+    refreshSchedule();
+    alert('Configurações salvas!');
+  }
+}
+
 function exportBackup(){let blob=new Blob([JSON.stringify({application:'JF Agenda',exportedAt:new Date().toISOString(),data},null,2)],{type:'application/json'});let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`jf-agenda-backup-${today()}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-async function importBackup(e){let file=e.target.files?.[0];if(!file)return;try{if(file.size>5e6)throw Error('Arquivo muito grande.');let raw=JSON.parse(await file.text()),d=raw.data;if(!validData(d))throw Error('Formato inválido ou versão incompatível.');if(!confirm('Restaurar este backup? Os dados atuais serão SUBSTITUÍDOS. Faça backup deles primeiro.'))return;data=d;persist();selectedSlots.clear();renderStudents();renderSettings();renderAgenda();renderAvailability();alert('Backup restaurado!')}catch(err){alert('Não foi possível restaurar: '+err.message)}finally{e.target.value=''}}
-function clearAll(){if(prompt('Para apagar tudo, digite APAGAR:')!=='APAGAR')return;data=defaultData();persist();selectedSlots.clear();document.getElementById('slotDuration').value=50;renderSettings();renderStudents();renderAgenda();renderAvailability();alert('Dados apagados.')}
-function init(){document.getElementById('todayLabel').textContent=new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short'}).format(new Date());document.getElementById('agendaDate').value=today();document.getElementById('fromDate').value=today();document.getElementById('toDate').value=addDays(today(),6);document.getElementById('slotDuration').value=data.settings.duration;renderStudents();renderSettings();renderAgenda();renderAvailability();if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{})}init();
+async function importBackup(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    if (file.size > 5e6) throw Error('Arquivo muito grande.');
+    const raw = JSON.parse(await file.text());
+    const next = upgrade(raw.data);
+    if (!confirm('Restaurar este backup? Os dados em uso serão substituídos.')) return;
+    if (commit(next, true)) {
+      afterRestore();
+      alert('Backup restaurado!');
+    }
+  } catch (error) {
+    alert('Não foi possível restaurar: ' + error.message);
+  } finally {
+    event.target.value = '';
+  }
+}
+function afterRestore() {
+  selectedSlots.clear();
+  document.getElementById('slotDuration').value = data.settings.duration;
+  renderSettings();
+  refreshSchedule();
+}
+function clearAll() {
+  if (prompt('Para esvaziar a agenda atual, digite APAGAR:') !== 'APAGAR') return;
+  if (commit(defaultData(), true)) {
+    afterRestore();
+    alert('Agenda esvaziada.');
+  }
+}
+function init() {
+  try {
+    data = load();
+  } catch {
+    data = defaultData();
+    storageError = 'A agenda local não pôde ser carregada. Os dados originais foram preservados. Restaure um backup em Ajustes ou reabra após liberar espaço no navegador.';
+    const notice = document.getElementById('storageNotice');
+    notice.textContent = storageError;
+    notice.classList.remove('hidden');
+  }
+  document.getElementById('todayLabel').textContent = new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short'}).format(new Date());
+  document.getElementById('agendaDate').value = today();
+  document.getElementById('fromDate').value = today();
+  document.getElementById('toDate').value = addDays(today(),6);
+  document.getElementById('slotDuration').value = data.settings.duration;
+  document.querySelector('#appointmentForm select[name="weekday"]').innerHTML = weekdays.map((day,i) => `<option value="${i}">${day}</option>`).join('');
+  document.getElementById('slotDays').innerHTML = weekdays.map((day,i) => `<label class="rowcheck small">
+    <input type="checkbox" class="checkbox" value="${i}" checked onchange="renderAvailability()">${day}</label>`).join('');
+  renderSettings();
+  refreshSchedule();
+  if ('serviceWorker' in navigator && ['https:', 'http:'].includes(location.protocol)) {
+    navigator.serviceWorker.register('./sw.js', {updateViaCache:'none'}).catch(() => {});
+  }
+}
+init();
 </script></body></html>

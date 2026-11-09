@@ -1,23 +1,53 @@
-JF | Agenda — versão 0.1
+JF | Agenda — v0.2
+==================
 
-O que já funciona:
-- Cadastro de alunos
-- Atendimentos avulsos e semanais, com horários exatos
-- Cancelamento de uma única ocorrência de uma recorrência
-- Detecção básica de conflitos e cálculo de intervalos livres
-- Jornada personalizada por dia e intervalo mínimo
-- Gerador de horários com filtros, seleção e mensagem para WhatsApp
-- Exportação e restauração manual de backup em JSON
-- PWA que funciona offline após a primeira visita em HTTPS
+ATUALIZAR NO GITHUB PAGES
 
-ATENÇÃO: o armazenamento é local ao navegador. Faça backups frequentes. Ainda NÃO há backup automático, conta, banco na nuvem ou sincronização. Não use como única cópia da sua agenda.
+1. No mesmo Chrome ou app instalado em que usa a v0.1, abra Ajustes >
+   Baixar backup JSON. Guarde o arquivo fora do GitHub. Se usa a agenda em
+   mais de um dispositivo, exporte um backup em cada dispositivo.
+2. Guarde também uma cópia dos arquivos publicados da v0.1, ou anote o
+   commit publicado no GitHub para poder voltar à versão anterior.
+3. Extraia o ZIP. No repositório do GitHub, copie os arquivos extraídos
+   diretamente para a mesma pasta que já contém o index.html publicado
+   (raiz ou /docs, conforme a configuração). Substitua os arquivos de
+   mesmo nome e confirme o commit na branch usada pelo Pages.
+4. Depois que o Pages terminar de publicar, abra o mesmo endereço no
+   mesmo perfil do Chrome, com internet. Recarregue e procure "v0.2" no
+   cabeçalho. Se a PWA instalada ainda mostrar v0.1, feche-a, abra o
+   endereço no Chrome, recarregue e reabra a PWA. Preserve os dados do site.
+5. Confira alunos, agenda e ajustes. A primeira abertura copia os dados da
+   v0.1 e conserva uma cópia local original. Se abriu em outro dispositivo,
+   perfil ou domínio, use Ajustes > Restaurar backup e selecione seu JSON.
+   A restauração substitui os dados em uso. Depois, exporte um backup v0.2.
 
-Como usar:
-1. Hospede todos os arquivos juntos numa hospedagem HTTPS (ex.: GitHub Pages).
-2. Abra o endereço no Chrome para Android.
-3. No menu ⋮, escolha Instalar aplicativo/Adicionar à tela inicial quando disponível.
-4. Cadastre alunos, configure sua jornada e crie atendimentos.
-5. Em 'Horários', selecione as opções e copie a mensagem.
-6. Em 'Ajustes', baixe backups JSON e guarde fora do navegador.
+USAR A VERSÃO 0.2
 
-Esta versão é um protótipo para teste com dados fictícios. Não suporta ainda deslocamentos entre locais, múltiplos blocos de jornada no mesmo dia, recorrências quinzenais, alteração só de uma ocorrência, nem sincronização entre dispositivos. Não substitui um sistema profissional de armazenamento e backups.
+- Alunos > Horários fixos > + Horário fixo. Cadastre uma regra por dia.
+  Exemplo: segunda 19:30–20:20, terça 19:30–20:20, quinta 16:00–16:50.
+  Digite quatro números para cada horário. Exemplo: 1905 vira 19:05.
+- Em Agenda, abra Editar esta aula para remarcar, mudar local ou registrar
+  situação, como Cancelado, Realizado, Falta ou Pendente de reposição.
+  A remarcação libera o horário original. Para desfazer um cancelamento,
+  abra a mesma aula e selecione Confirmado, sujeito à disponibilidade.
+- Em Horários fixos, use Alterar daqui em diante para mudar a regra a
+  partir de uma data, ou Editar série para corrigir a regra inteira.
+  Pausar ou Encerrar interrompe o padrão a partir de hoje. As aulas
+  anteriores e as alterações pontuais registradas ficam na agenda.
+- Use + Avulso para encaixes, experimentais e reposições. Selecione
+  Reserva provisória se quiser bloquear o horário enquanto aguarda
+  confirmação. Use + Bloqueio para um compromisso sem aluno.
+- Em Ajustes, configure jornada, intervalo mínimo e deslocamento. Entre
+  dois locais preenchidos e diferentes, vale o maior dos dois intervalos.
+  Use o mesmo nome para o mesmo local. Em Horários, informe o local da
+  nova aula para incluir o deslocamento e selecione opções para a mensagem.
+- O funcionamento offline requer uma primeira visita online bem-sucedida.
+  Os dados ficam no navegador, separados por dispositivo e perfil.
+  Faça backups JSON regularmente e mantenha-os fora do repositório.
+
+VOLTAR PARA A V0.1
+
+Exporte primeiro um backup da v0.2. Volte ao commit anterior no GitHub ou
+reponha todos os arquivos da v0.1 na mesma pasta e espere a publicação.
+A v0.1 usa sua cópia local anterior à migração, ou um backup JSON v0.1.
+Mantenha o backup v0.2 para recuperar mudanças feitas após a atualização.
