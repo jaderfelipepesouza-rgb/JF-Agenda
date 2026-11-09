@@ -1,0 +1,23 @@
+JF | Agenda — versão 0.1
+
+O que já funciona:
+- Cadastro de alunos
+- Atendimentos avulsos e semanais, com horários exatos
+- Cancelamento de uma única ocorrência de uma recorrência
+- Detecção básica de conflitos e cálculo de intervalos livres
+- Jornada personalizada por dia e intervalo mínimo
+- Gerador de horários com filtros, seleção e mensagem para WhatsApp
+- Exportação e restauração manual de backup em JSON
+- PWA que funciona offline após a primeira visita em HTTPS
+
+ATENÇÃO: o armazenamento é local ao navegador. Faça backups frequentes. Ainda NÃO há backup automático, conta, banco na nuvem ou sincronização. Não use como única cópia da sua agenda.
+
+Como usar:
+1. Hospede todos os arquivos juntos numa hospedagem HTTPS (ex.: GitHub Pages).
+2. Abra o endereço no Chrome para Android.
+3. No menu ⋮, escolha Instalar aplicativo/Adicionar à tela inicial quando disponível.
+4. Cadastre alunos, configure sua jornada e crie atendimentos.
+5. Em 'Horários', selecione as opções e copie a mensagem.
+6. Em 'Ajustes', baixe backups JSON e guarde fora do navegador.
+
+Esta versão é um protótipo para teste com dados fictícios. Não suporta ainda deslocamentos entre locais, múltiplos blocos de jornada no mesmo dia, recorrências quinzenais, alteração só de uma ocorrência, nem sincronização entre dispositivos. Não substitui um sistema profissional de armazenamento e backups.
