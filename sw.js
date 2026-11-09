@@ -1,39 +1,5 @@
-'use strict';
-
-const PREFIX = 'jf-agenda:' + self.registration.scope + ':';
-const CACHE = PREFIX + 'v02';
-const ASSETS = ['./index.html', './manifest.webmanifest', './icon.svg'];
-const ENTRY = new URL('./index.html', self.registration.scope).href;
-
-self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE);
-    await cache.addAll(ASSETS.map(url => new Request(new URL(url, self.registration.scope), {cache: 'reload'})));
-    await self.skipWaiting();
-  })());
-});
-self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key.startsWith(PREFIX) && key !== CACHE).map(key => caches.delete(key)));
-    await self.clients.claim();
-  })());
-});
-self.addEventListener('fetch', event => {
-  const request = event.request;
-  if (request.method !== 'GET') return;
-  const scope = new URL(self.registration.scope);
-  const url = new URL(request.url);
-  if (url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname)) return;
-  const relative = url.pathname.slice(scope.pathname.length);
-  const entry = request.mode === 'navigate' && (relative === '' || relative === 'index.html');
-  if (!entry && !ASSETS.includes('./' + relative)) return;
-  event.respondWith((async () => {
-    try {
-      return await fetch(request);
-    } catch {
-      const cache = await caches.open(CACHE);
-      return await cache.match(entry ? ENTRY : new URL(relative, scope).href) || Response.error();
-    }
-  })());
-});
+const CACHE='jf-agenda-v11-20261109a';
+const ASSETS=['./','./index.html','./v1.js','./v1.css','./v11.js','./v11.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));self.skipWaiting()});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('jf-agenda-')&&k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});
+self.addEventListener('fetch',event=>{if(event.request.method!=='GET'||new URL(event.request.url).origin!==location.origin)return;event.respondWith(fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(event.request,copy)))}return response}).catch(()=>caches.match(event.request)))});

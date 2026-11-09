@@ -1,53 +1,77 @@
-JF | Agenda — v0.2
-==================
+JF | AGENDA v1.1 — ATUALIZAÇÃO DO GITHUB PAGES
+===============================================
 
-ATUALIZAR NO GITHUB PAGES
+IMPORTANTE ANTES DE ATUALIZAR
+1. Abra a versão que já funciona no seu navegador.
+2. Em Ajustes, faça Baixar backup JSON e guarde em outro lugar (ex.: computador/Drive).
+3. NÃO limpe dados do Chrome, NÃO desinstale o PWA e NÃO apague o repositório.
+4. Faça testes com alunos fictícios antes de usar como sua única agenda.
 
-1. No mesmo Chrome ou app instalado em que usa a v0.1, abra Ajustes >
-   Baixar backup JSON. Guarde o arquivo fora do GitHub. Se usa a agenda em
-   mais de um dispositivo, exporte um backup em cada dispositivo.
-2. Guarde também uma cópia dos arquivos publicados da v0.1, ou anote o
-   commit publicado no GitHub para poder voltar à versão anterior.
-3. Extraia o ZIP. No repositório do GitHub, copie os arquivos extraídos
-   diretamente para a mesma pasta que já contém o index.html publicado
-   (raiz ou /docs, conforme a configuração). Substitua os arquivos de
-   mesmo nome e confirme o commit na branch usada pelo Pages.
-4. Depois que o Pages terminar de publicar, abra o mesmo endereço no
-   mesmo perfil do Chrome, com internet. Recarregue e procure "v0.2" no
-   cabeçalho. Se a PWA instalada ainda mostrar v0.1, feche-a, abra o
-   endereço no Chrome, recarregue e reabra a PWA. Preserve os dados do site.
-5. Confira alunos, agenda e ajustes. A primeira abertura copia os dados da
-   v0.1 e conserva uma cópia local original. Se abriu em outro dispositivo,
-   perfil ou domínio, use Ajustes > Restaurar backup e selecione seu JSON.
-   A restauração substitui os dados em uso. Depois, exporte um backup v0.2.
+PUBLICAÇÃO
+1. Extraia este ZIP no computador.
+2. No repositório existente do GitHub (JF-Agenda), branch main, envie os arquivos
+   DO DIRETÓRIO RAIZ EXTRAÍDO (não faça upload do ZIP como se fosse o site).
+3. Selecione todos: index.html, v1.js, v1.css, v11.js, v11.css, sw.js,
+   manifest.webmanifest, icon.svg, icon-192.png e icon-512.png.
+4. Substitua os arquivos anteriores de mesmo nome; os novos arquivos v11.*
+   devem ficar NO MESMO NÍVEL do index.html.
+5. Mantenha Settings > Pages > Deploy from a branch > main > /(root).
+6. Acesse o endereço antigo, aguarde a publicação e recarregue. Feche e abra
+   o PWA caso ainda apareça conteúdo anterior. O service worker usa cache
+   identificado como jf-agenda-v11-20261109a.
+7. Confirme que os dados anteriores permanecem. Exporte um novo backup v1.1.
 
-USAR A VERSÃO 0.2
+FUNCIONALIDADES DA V1.1
+- Recorrências por aluno, com dias e horários distintos; edição de futuras
+  regras, pausa com data e retomada sem apagar o histórico gerado.
+- Aulas avulsas e remarcação/cancelamento de ocorrência.
+- Presença/falta por aula, notas de reposição, vinculação ao evento original
+  quando encontrado, reposição agendada como compromisso real na agenda,
+  conclusão e cancelamento.
+- Bloqueios de datas, inclusive férias por intervalo de dias.
+- Cadastro de academias, matriz simples de minutos de deslocamento, conflito
+  de localização e ranqueamento de possíveis encaixes.
+- Modelos personalizados e edição final da mensagem. Exibe só dias da semana
+  ou datas exatas. Variáveis {nome}, {horarios}, {data}, {hora}, {local},
+  {dia} e {duracao}; um aluno cadastrado pode ser selecionado como destinatário.
+- Histórico de propostas; propostas oferecidas não reservam por padrão;
+  reserva provisória bloqueia os horários selecionados; confirmação escolhe
+  uma opção e cria um compromisso associado a aluno cadastrado.
+- Relatórios de ocupação e aulas previstas, feitas, faltas, cancelamentos
+  e reposições. Dados de presença exigem marcação manual.
+- Migração v0.1/v1.0, exportação completa e restauração com validação e cópia
+  local dos dados anteriores à importação (quando houver espaço).
+- Ajustes para uso no Chrome Android e ícones PNG 192/512 para PWA.
 
-- Alunos > Horários fixos > + Horário fixo. Cadastre uma regra por dia.
-  Exemplo: segunda 19:30–20:20, terça 19:30–20:20, quinta 16:00–16:50.
-  Digite quatro números para cada horário. Exemplo: 1905 vira 19:05.
-- Em Agenda, abra Editar esta aula para remarcar, mudar local ou registrar
-  situação, como Cancelado, Realizado, Falta ou Pendente de reposição.
-  A remarcação libera o horário original. Para desfazer um cancelamento,
-  abra a mesma aula e selecione Confirmado, sujeito à disponibilidade.
-- Em Horários fixos, use Alterar daqui em diante para mudar a regra a
-  partir de uma data, ou Editar série para corrigir a regra inteira.
-  Pausar ou Encerrar interrompe o padrão a partir de hoje. As aulas
-  anteriores e as alterações pontuais registradas ficam na agenda.
-- Use + Avulso para encaixes, experimentais e reposições. Selecione
-  Reserva provisória se quiser bloquear o horário enquanto aguarda
-  confirmação. Use + Bloqueio para um compromisso sem aluno.
-- Em Ajustes, configure jornada, intervalo mínimo e deslocamento. Entre
-  dois locais preenchidos e diferentes, vale o maior dos dois intervalos.
-  Use o mesmo nome para o mesmo local. Em Horários, informe o local da
-  nova aula para incluir o deslocamento e selecione opções para a mensagem.
-- O funcionamento offline requer uma primeira visita online bem-sucedida.
-  Os dados ficam no navegador, separados por dispositivo e perfil.
-  Faça backups JSON regularmente e mantenha-os fora do repositório.
+LIMITE IMPORTANTE
+- Os dados continuam no armazenamento local do mesmo navegador. O GitHub
+  Pages NÃO é banco de dados. Não há backup automático em nuvem, Google Drive
+  vinculado nem sincronização multi-dispositivo nesta versão.
+- A cópia automática pré-migração fica no mesmo navegador: ela NÃO protege
+  contra limpeza dos dados do Chrome. O backup JSON externo continua essencial.
+- O tempo de deslocamento deve ser cadastrado manualmente; a estimativa
+  presume tempos simétricos entre dois locais. Rotas reais não são calculadas.
+- Os horários sugeridos são alternativas e são calculados por regras, não IA.
+- A interface de agendar reposição ainda usa diálogos simples do navegador
+  (data, início, fim e local); o seletor de hora principal é um campo HH:MM.
+- Registros de aulas anteriores à introdução do controle de presenças não são
+  automaticamente convertidos em aulas realizadas.
+- Migração e lógica verificadas em teste local de Chromium, mas a publicação
+  no GitHub Pages e teste em aparelho Android devem ser feitos pelo usuário.
 
-VOLTAR PARA A V0.1
+ROTEIRO DE TESTE
+A. Abra o app e confira seus alunos antigos e suas aulas.
+B. Crie um aluno fictício e uma recorrência seg/ter/qui em horários diferentes.
+C. Pause a recorrência a partir da data atual e confira semana anterior/futura.
+D. Registre reposição e use Agendar; confira compromisso real na agenda.
+E. Crie 2 academias e 20 minutos de deslocamento; tente sobrepor proximidade.
+F. Na aba Horários, selecione opções e gere mensagem sem data e com data.
+G. Edite o texto; use Copiar e crie um novo modelo.
+H. Registre proposta, reserve provisoriamente e confirme apenas uma opção.
+I. Faça backup JSON, valide que o arquivo foi baixado e teste restauração
+   apenas com um backup de teste antes de restaurar dados reais.
 
-Exporte primeiro um backup da v0.2. Volte ao commit anterior no GitHub ou
-reponha todos os arquivos da v0.1 na mesma pasta e espere a publicação.
-A v0.1 usa sua cópia local anterior à migração, ou um backup JSON v0.1.
-Mantenha o backup v0.2 para recuperar mudanças feitas após a atualização.
+RECUPERAÇÃO
+Se perceber inconsistências, interrompa novos cadastros e preserve o backup
+externo da versão anterior. Não apague dados do navegador. Relate data,
+cenário e comportamento observado antes de outra atualização.
