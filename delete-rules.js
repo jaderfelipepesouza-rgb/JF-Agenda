@@ -3,13 +3,43 @@
 const jfDeleteSelection = new Set();
 const jfRuleListBeforeDelete = v1RenderRules;
 function jfRuleState(r){return r.until&&r.until<today()?'Encerrada':r.pauseFrom?'Pausada':'Ativa'}
+let jfSelectionMode=false;
 function jfRuleList(){
  const el=document.getElementById('rulesList');if(!el)return;
  const rules=data.rules.slice().sort((a,b)=>getStudent(a.studentId).localeCompare(getStudent(b.studentId))||a.weekday-b.weekday||String(a.start).localeCompare(String(b.start)));
  for(const id of Array.from(jfDeleteSelection))if(!data.rules.some(r=>r.id===id))jfDeleteSelection.delete(id);
- el.innerHTML=`<div class="jf-delete-toolbar"><div><strong>Gerenciar horários cadastrados</strong><div class="small muted">Marque os lançamentos incorretos para excluí-los de uma vez. Encerrar mantém o histórico.</div></div><div class="jf-delete-actions"><button class="btn secondary tiny" onclick="jfToggleAllRules()">${rules.length&&rules.every(r=>jfDeleteSelection.has(r.id))?'Desmarcar todas':'Selecionar todas'}</button><button class="btn danger tiny" ${jfDeleteSelection.size?'':'disabled'} onclick="jfDeleteSelectedRules()">Excluir selecionadas (${jfDeleteSelection.size})</button></div></div>`+
- (rules.length?rules.map(r=>`<div class="rule-entry jf-rule-card"><label class="jf-rule-select"><input type="checkbox" ${jfDeleteSelection.has(r.id)?'checked':''} onchange="jfToggleRule('${r.id}',this.checked)" aria-label="Selecionar regra de ${safe(getStudent(r.studentId))} ${safe(V1_DAYS[r.weekday])}"><span class="jf-rule-summary"><b>${safe(getStudent(r.studentId))}</b> <span class="pill">${jfRuleState(r)}</span><span class="small muted">${safe(v1RuleText(r))}</span><span class="small muted">Desde ${safe(r.from)}${r.until?' até '+safe(r.until):''}</span></span></label><div class="jf-rule-buttons"><button class="btn secondary tiny" onclick="j11EditRule('${r.id}')">Editar</button><button class="btn secondary tiny" onclick="j11PauseRule('${r.id}')">Pausar / retomar</button><button class="btn secondary tiny" onclick="v1SplitRule('${r.id}')">Alterar futuras</button><button class="btn secondary tiny" onclick="v1DeleteRule('${r.id}')">Encerrar</button><button class="btn danger tiny" onclick="jfDeleteRules(['${r.id}'])">Excluir</button></div></div>`).join(''):'<div class="empty">Nenhuma regra semanal cadastrada.</div>');
+ if(jfDeleteSelection.size)jfSelectionMode=true;
+ const grouped=new Map();
+ for(const r of rules){const group=grouped.get(r.studentId)||[];group.push(r);grouped.set(r.studentId,group)}
+ const total=rules.length;
+ const toolbar=`<div class="jf-compact-toolbar"><div class="jf-compact-count"><strong>${total} horário${total===1?'':'s'} fixo${total===1?'':'s'}</strong><span>${grouped.size} aluno${grouped.size===1?'':'s'}</span></div><button class="jf-select-mode" type="button" onclick="jfSetSelectionMode()">${jfSelectionMode?'Concluir seleção':'Selecionar vários'}</button></div>`;
+ const batch=jfSelectionMode?`<div class="jf-compact-batch"><span>${jfDeleteSelection.size} selecionado${jfDeleteSelection.size===1?'':'s'}</span><button type="button" class="jf-minor-link" onclick="jfToggleAllRules()">${total&&rules.every(r=>jfDeleteSelection.has(r.id))?'Desmarcar todos':'Selecionar todos'}</button><button type="button" class="jf-batch-delete" ${jfDeleteSelection.size?'':'disabled'} onclick="jfDeleteSelectedRules()">Excluir (${jfDeleteSelection.size})</button></div>`:'';
+ let html='';
+ for(const [studentId,list] of grouped){
+   const student=safe(getStudent(studentId));
+   html+=`<div class="jf-student-group"><div class="jf-student-group-head"><strong>${student}</strong><span>${list.length} horário${list.length===1?'':'s'}</span></div>`;
+   for(const r of list){
+     const state=jfRuleState(r),tone=state==='Ativa'?'active':state==='Pausada'?'paused':'ended';
+     const when=`${safe(V1_DAYS[r.weekday])} · ${safe(r.start)}–${safe(r.end)}`;
+     const location=safe(r.location||'Local não informado');
+     html+=`<div class="jf-compact-rule" data-rule-id="${safe(r.id)}"><div class="jf-compact-rule-main">
+       ${jfSelectionMode?`<label class="jf-compact-check"><input type="checkbox" ${jfDeleteSelection.has(r.id)?'checked':''} onchange="jfToggleRule('${r.id}',this.checked)" aria-label="Selecionar horário de ${student} ${safe(V1_DAYS[r.weekday])}"></label>`:''}
+       <div class="jf-rule-text"><div class="jf-rule-title">${when}<span class="jf-rule-dot ${tone}" title="${state}" aria-label="${state}"></span></div><div class="jf-rule-caption">${location} · ${state}</div>${r.until?`<div class="jf-rule-caption">Até ${safe(r.until.split('-').reverse().join('/'))}</div>`:''}</div>
+       </div><div class="jf-rule-compact-actions"><button type="button" class="jf-edit-compact" onclick="j11EditRule('${r.id}')">Editar</button>
+       <details class="jf-more-details"><summary>Mais <span aria-hidden="true">⌄</span></summary><div class="jf-more-list">
+       <button type="button" onclick="j11PauseRule('${r.id}');jfCloseMenus()">${state==='Pausada'?'Retomar':'Pausar / retomar'}</button>
+       <button type="button" onclick="v1SplitRule('${r.id}');jfCloseMenus()">Alterar futuras</button>
+       <button type="button" onclick="v1DeleteRule('${r.id}');jfCloseMenus()">Encerrar</button>
+       <button type="button" class="jf-more-danger" onclick="jfDeleteRules(['${r.id}']);jfCloseMenus()">Excluir definitivamente</button>
+       </div></details></div></div>`;
+   }
+   html+='</div>';
+ }
+ el.innerHTML=toolbar+batch+(html||'<div class="empty">Nenhuma regra semanal cadastrada.</div>');
 }
+function jfSetSelectionMode(){jfSelectionMode=!jfSelectionMode;if(!jfSelectionMode)jfDeleteSelection.clear();jfRuleList()}
+function jfCloseMenus(){document.querySelectorAll('#rulesList details[open]').forEach(x=>x.open=false)}
+
 v1RenderRules=jfRuleList;
 function jfToggleRule(id,checked){if(checked)jfDeleteSelection.add(id);else jfDeleteSelection.delete(id);jfRuleList()}
 function jfToggleAllRules(){const all=data.rules.map(r=>r.id);if(all.every(id=>jfDeleteSelection.has(id)))jfDeleteSelection.clear();else all.forEach(id=>jfDeleteSelection.add(id));jfRuleList()}

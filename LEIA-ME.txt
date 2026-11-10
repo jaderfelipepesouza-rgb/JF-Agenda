@@ -89,3 +89,6 @@ JF Agenda 1.1.3: Alunos > Horários semanais antigos: exclusão controlada de re
 
 
 Atualização v1.2 Design: melhoria visual e de usabilidade, com atalhos por página, busca em alunos, seções recolhíveis e refinamento do layout, sem alterar a lógica principal.
+
+
+v1.2.1: Seção Grade fixa semanal agrupada por aluno. Ações secundárias ficam em Mais; exclusão em lote somente no modo Selecionar vários. Sem mudanças no armazenamento ou nas regras de agendamento.

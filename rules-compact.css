@@ -1,0 +1,49 @@
+/* v1.2.1 — compact weekly rules, preserving all prior handlers */
+#rulesList{display:block}
+.jf-compact-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0 10px}
+.jf-compact-count{display:flex;flex-direction:column;gap:3px}
+.jf-compact-count strong{font-size:14px;color:#f0f1f3}
+.jf-compact-count span{font-size:12px;color:#9ea6b3}
+.jf-select-mode{background:#1b2027;color:#d4dae3;border:1px solid #323b46;border-radius:11px;padding:9px 12px;font-weight:600;font-size:12px}
+.jf-compact-batch{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px;margin:8px 0 12px;border-radius:13px;background:#24241a;border:1px solid #4b4528;font-size:12px}
+.jf-compact-batch span{font-weight:700;color:#ffe282;margin-right:auto}
+.jf-minor-link{border:none;background:none;color:#e6d38b;font-weight:600;padding:6px}
+.jf-batch-delete{background:#4d2427;color:#ffd9d9;border:1px solid #774045;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:700}
+.jf-batch-delete:disabled{opacity:.42}
+.jf-student-group{background:#111318;border:1px solid #2b303a;border-radius:16px;overflow:hidden;margin-bottom:12px}
+.jf-student-group-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:#1b1e24;border-bottom:1px solid #2b303a}
+.jf-student-group-head strong{font-size:14px;line-height:1.35;min-width:0;overflow-wrap:anywhere}
+.jf-student-group-head span{font-size:11px;color:#9fa8b3;white-space:nowrap}
+.jf-compact-rule{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;position:relative;border-bottom:1px solid #272c34}
+.jf-compact-rule:last-child{border-bottom:0}
+.jf-compact-rule-main{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.jf-compact-check{display:grid;place-items:center;flex:0 0 20px;cursor:pointer}
+.jf-compact-check input{width:19px;height:19px;accent-color:#ffd700}
+.jf-rule-text{min-width:0;flex:1}
+.jf-rule-title{font-size:14px;font-weight:700;line-height:1.3;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.jf-rule-caption{font-size:11px;line-height:1.45;color:#abb2bd;margin-top:4px}
+.jf-rule-dot{height:7px;width:7px;border-radius:100%;display:inline-block;flex:0 0 7px}
+.jf-rule-dot.active{background:#64c996;box-shadow:0 0 0 3px rgba(100,201,150,.11)}
+.jf-rule-dot.paused{background:#f3bf55}
+.jf-rule-dot.ended{background:#8b92a0}
+.jf-rule-compact-actions{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+.jf-edit-compact,.jf-more-details>summary{background:#22262e;border:1px solid #38404b;border-radius:10px;color:#e7eaf0;font-size:12px;font-weight:700;padding:9px 10px;white-space:nowrap}
+.jf-more-details{position:static}
+.jf-more-details>summary{list-style:none;cursor:pointer;user-select:none}
+.jf-more-details>summary::-webkit-details-marker{display:none}
+.jf-more-details[open]>summary{border-color:#8b7930;color:#ffdf69}
+.jf-more-list{position:absolute;right:12px;top:calc(100% - 5px);z-index:6;width:min(265px,calc(100% - 24px));padding:7px;background:#22262e;border:1px solid #414958;border-radius:13px;box-shadow:0 14px 26px #0009;display:grid;gap:3px}
+.jf-more-list button{text-align:left;border:0;background:transparent;color:#f0f2f5;padding:12px 11px;border-radius:8px;font-size:13px}
+.jf-more-list button:active,.jf-more-list button:hover{background:#343a44}
+.jf-more-list .jf-more-danger{color:#ffbaba}
+#rulesList .jf-rule-card{display:none!important}
+@media(max-width:540px){
+ .jf-compact-rule{padding:11px 12px;gap:6px}
+ .jf-student-group-head{padding:11px 12px}
+ .jf-rule-title{font-size:13px}
+ .jf-rule-compact-actions{gap:5px}
+ .jf-edit-compact,.jf-more-details>summary{padding:9px 8px;font-size:11px}
+}
+/* Menu must float above neighboring compact rows rather than be clipped. */
+.jf-student-group{overflow:visible}
+.jf-compact-rule:has(.jf-more-details[open]){z-index:7}
