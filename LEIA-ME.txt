@@ -84,3 +84,5 @@ externo da versão anterior. Não apague dados do navegador. Relate data,
 cenário e comportamento observado antes de outra atualização.
 
 ATUALIZAÇÃO 1.1.2: exclusão individual ou múltipla de horários fixos errados. Antes de apagar, exporte backup JSON. A exclusão remove as ocorrências históricas daquela regra; Encerrar continua disponível para conservar histórico. Inclua delete-rules.js e delete-rules.css ao publicar.
+
+JF Agenda 1.1.3: Alunos > Horários semanais antigos: exclusão controlada de recorrências legadas armazenadas em appointments. Faça backup JSON antes.
