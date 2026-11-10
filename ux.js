@@ -1,4 +1,4 @@
-/* JF Agenda UI v1.3: strictly presentational; existing handlers and storage retained */
+/* JF Agenda UI v1.4: strictly presentational; existing handlers and storage retained */
 (()=>{
 'use strict';
 const DEFAULT_CLOSED=new Set(['Dicas','Reposições do dia','Histórico de horários oferecidos','Academias e deslocamentos','Bloqueio de vários dias / férias','Frequência e relatório detalhado','Sobre esta versão','Sugestões de encaixe','Segurança e limitações']);
@@ -15,7 +15,7 @@ function collapse(panel,page){if(panel.dataset.jfUiDone)return;const title=nameO
  top.append(h,btn);panel.replaceChildren(top,body);panel.dataset.jfUiDone='1';update(key in settings?settings[key]:DEFAULT_CLOSED.has(labelFor(title)));
 }
 function apply(){
- const text=document.querySelector('header .small');if(text && !document.getElementById('jfVersion')){const v=document.createElement('span');v.id='jfVersion';v.textContent='Interface v1.3';text.parentElement.append(v)}
+ const text=document.querySelector('header .small');if(text && !document.getElementById('jfVersion')){const v=document.createElement('span');v.id='jfVersion';v.textContent='Interface v1.4';text.parentElement.append(v)}
  for(let page of ['agenda','alunos','disponibilidade','config']){
  const root=document.getElementById('page-'+page);if(!root)continue;
  root.querySelectorAll(':scope > .ux-hero').forEach(el=>el.remove());

@@ -1,4 +1,4 @@
-const CACHE='jf-agenda-v130-ux-20261109b';
+const CACHE='jf-agenda-v140-modern-20261110a';
 const ASSETS=['./','./index.html','./v1.js','./v1.css','./v11.js','./v11.css','./timefix.js','./delete-rules.js','./delete-rules.css','./legacy-cleanup.js','./ux.css','./ux.js','./rules-compact.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('jf-agenda-')&&k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim()});

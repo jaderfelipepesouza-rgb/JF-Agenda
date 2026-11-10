@@ -1,92 +1,193 @@
 
-/* JF Agenda v1.3 — one final, mobile-first presentation layer. */
-:root{--jf-gold:#FFD700; color-scheme:dark}
-html{scroll-behavior:auto}
-body{background:#0b0c0e;color:#f5f5f6;overflow-x:hidden;padding-bottom:calc(70px + env(safe-area-inset-bottom))}
-.wrap{max-width:880px;margin:0 auto;padding:10px 12px 100px}
-header{position:static!important;display:flex;gap:8px;align-items:center;padding:8px 0 12px!important;margin:0 0 10px!important;background:transparent!important;backdrop-filter:none!important;border-bottom:1px solid #292b30!important}
-header>div:first-child{min-width:0;gap:9px!important}
-header .logo{width:38px;height:38px;border-radius:10px;flex:0 0 38px;box-shadow:none;border:1px solid #a88d21}
-header h1{font-size:clamp(21px,5.4vw,28px)!important;letter-spacing:.02em;line-height:1.12;white-space:nowrap}
-header .small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-header #todayLabel{font-size:10px;white-space:nowrap;padding:5px 7px;flex-shrink:0}
-#jfVersion{font-size:10px;color:#e6cb67;letter-spacing:.03em;display:block;margin-top:3px}
-.panel{border:1px solid #292c32!important;box-shadow:none!important;background:#151619!important;border-radius:15px!important;padding:12px!important;margin-top:10px!important;min-width:0}
-.panel h2{font-size:18px!important;margin:0 0 8px!important;line-height:1.25!important}
-.panel h3{font-size:15px!important;margin:0 0 8px!important;line-height:1.3!important}
-.grid,.grid3{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
-#agendaStats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin-top:10px!important}
-#agendaStats .stat{padding:9px 7px!important;background:#101114;border:1px solid #2e3038;border-radius:11px!important;min-width:0}
-#agendaStats .stat strong{display:block;font-size:clamp(16px,4vw,23px)!important;line-height:1.2!important;color:var(--jf-gold)}
-#agendaStats .stat span{display:block;font-size:10px!important;line-height:1.2;white-space:normal;word-break:normal;overflow-wrap:normal}
-.field{font-size:12px!important;gap:5px!important;margin:5px 0!important;letter-spacing:0!important;text-transform:none!important;color:#c5c5ca!important}
-input,select,textarea{background:#101114!important;color:#f4f4f5!important;border:1px solid #383c43!important;border-radius:10px!important;min-height:40px!important;padding:9px 10px!important;box-shadow:none!important;max-width:100%;font-size:14px!important}
-input:focus,select:focus,textarea:focus{outline:2px solid #ffd700!important;outline-offset:0}
-button{max-width:100%}
-.btn{background:#ffd700;color:#101010;min-height:38px!important;border-radius:10px!important;padding:9px 11px!important;font-size:12px!important;line-height:1.25;box-shadow:none!important;font-weight:700}
-.btn.secondary{background:#22252a;color:#f3f3f4;border:1px solid #383d45!important}
-.btn.danger{background:#3b2325!important;color:#ffc7c7!important;border:1px solid #6a3b41!important}
-.actions{display:flex;align-items:center;gap:7px!important;flex-wrap:wrap}
-.actions>.btn{flex:0 1 auto}
-.item{background:transparent!important;border:0!important;border-bottom:1px solid #2a2c32!important;border-radius:0!important;padding:10px 0!important;margin:0!important;min-width:0}
-.item:last-child{border-bottom:0!important}
-.item-main{min-width:0!important;flex:1}
-.item-main b{font-size:14px;line-height:1.3}
-.item .actions{width:auto!important;display:flex!important;flex-wrap:wrap;gap:6px!important;min-width:0}
-.item .actions>.btn{min-width:0;flex:0 1 auto}
-.stat{background:#111214;border:1px solid #2d2e35;border-radius:12px;padding:10px}
-.stat strong{font-size:21px}
-.pill{font-size:10px!important}
-.dayhead{font-size:14px;margin:13px 0 6px!important}
-.note,.hint{font-size:12px!important;line-height:1.55!important;color:#bfc0c4}
-.preview{font-size:13px!important;line-height:1.55;border-radius:10px;padding:12px}
-.ux-panel-head{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:8px!important;min-width:0}
-.ux-panel-head h3{font-size:15px!important;line-height:1.25!important;min-width:0;overflow-wrap:normal!important;word-break:normal!important;margin:0!important}
-.ux-panel-toggle{font-size:12px!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;width:83px!important;min-width:83px!important;max-width:83px!important;padding:8px 9px!important;border-radius:9px!important;line-height:1.2!important;flex:none!important;text-align:center}
-.ux-collapsed .ux-panel-body{display:none!important}.ux-panel-body{margin-top:12px}
-.ux-collapsed{padding-bottom:12px!important}
-.topnav{position:fixed!important;bottom:0!important;left:0;right:0;display:flex!important;align-items:stretch;background:#111216!important;border-top:1px solid #34353a!important;z-index:15;box-shadow:none!important;padding:0 4px env(safe-area-inset-bottom)!important}
-.topnav button{flex:1;min-height:54px!important;margin:0!important;padding:8px 2px!important;font-size:11px!important;font-weight:600!important;line-height:1.4!important;display:block!important;border-radius:0!important;color:#acaeb4}
-.topnav button.active{color:#ffd700!important;background:rgba(255,215,0,.055)!important;border-top:2px solid #ffd700!important;box-shadow:none!important}
-#page-agenda .panel:first-child .actions{display:flex;align-items:center;justify-content:space-between;gap:7px}
-#page-agenda .panel:first-child h2{margin:0!important}
-#page-agenda .panel:first-child .grid{display:grid;grid-template-columns:1fr 1fr!important}
-#page-agenda #agendaItems>.dayhead{color:#ffd700;font-weight:700}
-#page-agenda #agendaItems .item{display:flex;align-items:flex-start;gap:8px;flex-direction:column}
-#page-agenda #agendaItems .item-main{width:100%}
-#page-agenda #agendaItems .item .actions{display:flex;gap:6px}
-#page-agenda #agendaItems .item .actions .btn{font-size:11px!important;min-height:34px!important;padding:7px 10px!important}
-#page-agenda #agendaItems .item .actions button.danger{background:#302023!important;color:#fbb7b7!important}
-/* Compact view of weekly rules remains fully interactive. */
-.jf-student-group,.jf-rule-card{box-shadow:none!important}
-.jf-compact-rule{gap:6px!important;padding:10px!important}
-.jf-rule-compact-actions{gap:5px!important}
-.jf-edit-compact,.jf-more-details>summary{font-size:11px!important;padding:8px 9px!important;white-space:nowrap!important}
-.jf-rule-title{font-size:13px!important}
-.jf-rule-caption{font-size:11px!important}
-.jf-student-group-head strong{font-size:13px!important}
-.jf-compact-toolbar{gap:8px}
-.ux-student-search{width:100%}
-.ux-panel-head .ux-panel-toggle{align-self:center}
-.ux-compact-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.ux-item-actions{margin-top:7px}
-.ux-actions-summary{display:inline-flex;align-items:center;justify-content:center;min-height:33px;padding:7px 11px;border:1px solid #3b404b;border-radius:9px;background:#24262b;color:#ededed;font-size:12px;font-weight:650;list-style:none;cursor:pointer}
-.ux-item-actions>summary::-webkit-details-marker{display:none}
-.ux-item-actions .actions{padding-top:8px}
-#page-config .panel .actions>.btn{max-width:100%;overflow-wrap:normal;white-space:normal}
-#page-config .panel .item{flex-wrap:wrap}
-#page-config #workingFields .item{display:grid;grid-template-columns:minmax(72px,0.8fr) minmax(0,2fr);align-items:center;gap:8px}
-#page-config #workingFields .item .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-#page-config #workingFields .item .rowcheck{min-width:0!important;font-size:12px}
-dialog{max-width:min(96vw,520px)!important;max-height:calc(100dvh - 22px)!important;overflow:auto!important;border-radius:14px!important;padding:14px!important}
-dialog .actions{position:sticky!important;bottom:-14px;background:#1b1b1b;padding:12px 0;z-index:2}
-@media(max-width:560px){
- .wrap{padding:8px 10px 82px!important}
- .grid,.grid3{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- #agendaStats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
- .item{flex-direction:column;align-items:stretch}
- .item .actions{justify-content:flex-start!important}
- .jf-rule-buttons{display:flex;flex-wrap:wrap}
- .ux-panel-toggle{width:83px!important;min-width:83px!important}
+/* JF Agenda v1.4 — modern aesthetic layer */
+:root{
+  --bg:#0a0c10;
+  --bg-2:#0f1218;
+  --panel:#11151d;
+  --panel-2:#151b24;
+  --line:#232a36;
+  --line-2:#2d3644;
+  --text:#f5f7fb;
+  --muted:#a7b0be;
+  --gold:#ffd447;
+  --gold-2:#ffde67;
+  --gold-soft:rgba(255,212,71,.12);
+  --danger:#a7505a;
+  color-scheme:dark;
 }
-@media(max-width:355px){header h1{font-size:19px!important}#agendaStats .stat strong{font-size:16px!important}#agendaStats .stat span{font-size:9px!important}.topnav button{font-size:10px!important}}
+html{scroll-behavior:auto}
+body{
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,212,71,.08), transparent 22%),
+    radial-gradient(circle at 100% 20%, rgba(255,255,255,.03), transparent 18%),
+    linear-gradient(180deg, #090b0f 0%, #0d1015 100%);
+  color:var(--text);
+  overflow-x:hidden;
+  padding-bottom:calc(78px + env(safe-area-inset-bottom));
+}
+.wrap{max-width:920px;margin:0 auto;padding:14px 12px 96px}
+header{
+  position:static!important;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 2px 18px!important;margin:0 0 12px!important;
+  border-bottom:1px solid rgba(255,255,255,.06)!important;
+  background:transparent!important;backdrop-filter:none!important;
+}
+header>div:first-child{min-width:0;gap:12px!important}
+header .logo{
+  width:56px;height:56px;flex:0 0 56px;border-radius:18px;
+  border:1px solid rgba(255,212,71,.58);
+  background:linear-gradient(180deg, rgba(255,212,71,.16), rgba(255,212,71,.04));
+  color:var(--gold);box-shadow:0 14px 28px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.05);
+}
+header h1{
+  font-size:clamp(26px,6vw,40px)!important;
+  letter-spacing:.01em;line-height:1.02;font-weight:700;
+}
+header h1 span{color:var(--gold)!important}
+header .small{font-size:13px!important;color:#b7beca!important;white-space:nowrap}
+header #todayLabel{
+  padding:11px 14px!important;border-radius:18px!important;
+  background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.08)!important;
+  color:#edf1f7!important;font-size:13px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+#jfVersion{display:block;margin-top:4px;font-size:12px;color:var(--gold-2)}
+.panel{
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg, rgba(20,25,33,.94), rgba(16,20,27,.98))!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  border-radius:24px!important;padding:18px!important;margin-top:14px!important;
+  box-shadow:0 18px 40px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.03);
+}
+.panel::before{
+  content:'';position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,212,71,.22), transparent);pointer-events:none;
+}
+.panel h2{font-size:28px!important;line-height:1.05!important;letter-spacing:-.03em!important;margin:0 0 12px!important}
+.panel h3{font-size:22px!important;line-height:1.12!important;letter-spacing:-.02em!important;margin:0 0 12px!important}
+.muted,.small,small{color:var(--muted)!important}
+.field{font-size:13px!important;font-weight:600;gap:7px!important;color:#c8d0db!important;margin:7px 0!important}
+input,select,textarea{
+  background:linear-gradient(180deg, #0f1319, #0c1015)!important;color:var(--text)!important;
+  border:1px solid var(--line-2)!important;border-radius:16px!important;min-height:52px!important;
+  padding:13px 14px!important;font-size:17px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.03), 0 8px 16px rgba(0,0,0,.12)!important;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none!important;border-color:rgba(255,212,71,.72)!important;box-shadow:0 0 0 3px rgba(255,212,71,.14), inset 0 1px 0 rgba(255,255,255,.03)!important;
+}
+.grid,.grid3{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+#agendaStats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;margin-top:12px!important}
+.stat{
+  background:linear-gradient(180deg, rgba(10,12,17,.85), rgba(14,17,23,.96));
+  border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:14px 14px 13px;
+}
+.stat strong{font-size:clamp(28px,7vw,34px)!important;line-height:1;color:var(--gold)!important;display:block;margin-bottom:6px}
+.stat span{display:block;font-size:13px!important;line-height:1.25;color:#b5bfca!important}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px!important}
+.btn{
+  min-height:46px!important;padding:12px 16px!important;border-radius:16px!important;border:1px solid transparent!important;
+  background:linear-gradient(180deg,var(--gold-2),var(--gold));color:#121417;font-size:16px!important;font-weight:800;line-height:1.15;
+  box-shadow:0 14px 28px rgba(255,212,71,.16), inset 0 1px 0 rgba(255,255,255,.32);
+}
+.btn.secondary{
+  background:linear-gradient(180deg, #1c222c, #151a22)!important;color:#eef2f7!important;border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 10px 22px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+.btn.danger{
+  background:linear-gradient(180deg, rgba(97,35,43,.52), rgba(70,25,31,.7))!important;color:#ffd2d7!important;border-color:rgba(255,143,157,.25)!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.16)!important;
+}
+.btn.tiny{min-height:38px!important;padding:10px 12px!important;font-size:14px!important;border-radius:14px!important}
+#page-agenda .panel:first-child .actions{justify-content:space-between!important;align-items:flex-start!important}
+#page-agenda .panel:first-child .btn{min-width:170px}
+.item{
+  border-bottom:1px solid rgba(255,255,255,.06)!important;padding:14px 0!important;gap:12px!important;background:transparent!important
+}
+.item-main{min-width:0!important}
+.item-main b{font-size:19px!important;line-height:1.22!important;letter-spacing:-.02em}
+.item-main>div:first-child,.time{font-variant-numeric:tabular-nums}
+.item .actions{display:flex!important;gap:8px!important;flex-wrap:wrap}
+.item .actions>.btn{font-size:15px!important;min-height:44px!important;padding:11px 14px!important}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;padding:7px 10px!important;border-radius:999px!important;
+  background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.08)!important;color:#edf2f8!important;font-size:12px!important
+}
+.pill.free{background:rgba(44,113,74,.18)!important;border-color:rgba(87,168,115,.28)!important;color:#caefd6!important}
+.pill.busy{background:rgba(130,111,35,.18)!important;border-color:rgba(220,184,78,.24)!important;color:#f6e3a7!important}
+.preview{
+  white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.68!important;background:linear-gradient(180deg,#0c1015,#0f1318)!important;
+  border:1px solid rgba(255,255,255,.06)!important;border-radius:18px!important;padding:16px 16px!important;font-size:15px!important;color:#eef2f7!important
+}
+.note,.hint{
+  color:#c4cbd7!important;font-size:14px!important;line-height:1.65!important;
+}
+.note{border-left:4px solid var(--gold)!important;padding-left:12px!important}
+.dayhead{margin:16px 0 8px!important;font-size:17px!important;color:var(--gold)!important;font-weight:700}
+.ux-panel-head{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:12px!important;align-items:center!important}
+.ux-panel-head h3{font-size:20px!important;line-height:1.15!important;margin:0!important}
+.ux-panel-toggle{
+  width:auto!important;min-width:98px!important;padding:11px 14px!important;border-radius:15px!important;border:1px solid rgba(255,255,255,.08)!important;
+  background:linear-gradient(180deg,#1d232d,#151922)!important;color:#f1f4f9!important;font-size:14px!important;font-weight:700!important;white-space:nowrap!important
+}
+.ux-collapsed .ux-panel-body{display:none!important}
+.ux-panel-body{margin-top:12px}
+.topnav{
+  position:fixed!important;left:10px;right:10px;bottom:10px!important;padding:6px!important;
+  background:rgba(17,20,26,.92)!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:24px!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.03)!important;backdrop-filter:blur(18px)
+}
+.topnav button{
+  min-height:60px!important;margin:0!important;padding:8px 4px!important;border-radius:18px!important;font-size:13px!important;font-weight:700!important;
+  color:#abb3c0!important;display:flex!important;flex-direction:column;justify-content:center;gap:4px;border-top:none!important
+}
+.topnav button.active{
+  color:var(--gold)!important;background:linear-gradient(180deg, rgba(255,212,71,.14), rgba(255,212,71,.05))!important;
+  box-shadow:inset 0 0 0 1px rgba(255,212,71,.18)!important;border-top:none!important
+}
+.ux-actions-summary{
+  display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:11px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,#1c222c,#151a22);color:#f2f5f8;font-size:15px;font-weight:700;cursor:pointer;list-style:none
+}
+.ux-actions-summary::-webkit-details-marker{display:none}
+/* keep compact weekly rules, but cleaner */
+.jf-student-group,.jf-rule-card{background:transparent!important;box-shadow:none!important}
+.jf-student-group{border:1px solid rgba(255,255,255,.06)!important;border-radius:20px!important;background:linear-gradient(180deg, rgba(18,23,30,.72), rgba(13,17,23,.92))!important;padding:12px!important}
+.jf-student-group-head strong{font-size:18px!important;letter-spacing:-.02em}
+.jf-rule-title{font-size:15px!important;color:#f6f7fa!important}
+.jf-rule-caption{font-size:13px!important;color:#aeb7c4!important}
+.jf-compact-rule{padding:12px!important;border-radius:16px!important;background:rgba(255,255,255,.03)!important;border:1px solid rgba(255,255,255,.05)!important}
+.jf-edit-compact,.jf-more-details>summary{font-size:14px!important;padding:10px 12px!important;border-radius:14px!important}
+#page-config .panel .actions>.btn{white-space:normal}
+dialog{max-width:min(96vw,560px)!important;max-height:calc(100dvh - 20px)!important;background:linear-gradient(180deg,#171c24,#11161d)!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:24px!important;padding:18px!important;box-shadow:0 24px 50px rgba(0,0,0,.38)!important}
+dialog .actions{position:sticky!important;bottom:-18px;background:linear-gradient(180deg, rgba(17,22,29,0), rgba(17,22,29,.96) 28%);padding:14px 0 2px;z-index:3}
+@media (max-width:640px){
+  .wrap{padding:12px 12px 96px}
+  header .logo{width:50px;height:50px;flex-basis:50px}
+  header h1{font-size:clamp(22px,9vw,34px)!important}
+  header .small{font-size:12px!important}
+  #page-agenda .panel:first-child .actions{align-items:stretch!important}
+  #page-agenda .panel:first-child .btn{min-width:0;width:100%}
+  .panel{padding:16px!important;border-radius:22px!important}
+  .panel h2{font-size:18px!important}
+  .panel h3{font-size:16px!important}
+  input,select,textarea{min-height:48px!important;font-size:16px!important}
+  .btn{min-height:42px!important;padding:10px 14px!important;font-size:14px!important;border-radius:14px!important}
+  .item-main b{font-size:15px!important}
+  .item .actions>.btn{font-size:13px!important;min-height:40px!important;padding:10px 12px!important}
+  .grid,.grid3{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  #agendaStats{gap:8px!important}
+  .stat{padding:11px 10px!important;border-radius:16px!important}
+  .stat strong{font-size:23px!important}
+  .stat span{font-size:12px!important}
+  .ux-panel-toggle{min-width:92px!important;padding:10px 12px!important;font-size:13px!important}
+  .topnav{left:8px;right:8px;bottom:8px!important}
+  .topnav button{min-height:58px!important;font-size:12px!important}
+}
+@media (max-width:390px){
+  .wrap{padding-inline:10px}
+  header{align-items:flex-start!important}
+  header #todayLabel{padding:10px 12px!important;font-size:12px!important}
+  #agendaStats{grid-template-columns:1fr!important}
+  .grid,.grid3{grid-template-columns:1fr!important}
+  .topnav button{font-size:11px!important}
+}
