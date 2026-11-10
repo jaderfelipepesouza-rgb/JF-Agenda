@@ -5,3 +5,6 @@ ATUALIZAR: Faça backup JSON da versão atual. Extraia o ZIP, abra a pasta JF-Ag
 Correções: cabeçalho não fixa/cobre telas; estatísticas lado a lado; botões Mostrar/Ocultar sem quebra; painéis de instruções com títulos curtos; campos e botões compactos; menos rolagem. Nenhuma alteração intencional na estrutura de dados, motor de agenda ou operações de cadastro.
 
 LIMITAÇÕES: dados continuam locais no navegador; backup automático e nuvem não foram implementados. Testes de interface no Chrome Android ainda necessários.
+
+
+JF Agenda Interface v1.3: folha final ux.css carregada depois de v1/v11; corrigidos espaçamentos e títulos e identificado com rótulo visível Interface v1.3. Mantidas funções e estrutura local.

@@ -1,80 +1,92 @@
-/* JF Agenda v1.2.2 - compact, mobile-first design, no business logic changes */
-:root{color-scheme:dark;--accent:#ffd700;--surface:#151619;--line:#303238;--mute:#acadb1}
-*,*::before,*::after{box-sizing:border-box}
+
+/* JF Agenda v1.3 — one final, mobile-first presentation layer. */
+:root{--jf-gold:#FFD700; color-scheme:dark}
 html{scroll-behavior:auto}
-body{background:#0b0c0e;color:#f4f4f4;padding-bottom:calc(82px + env(safe-area-inset-bottom));overflow-x:hidden}
-.wrap{max-width:850px;padding:12px 12px 100px}
-header{position:relative!important;top:auto!important;z-index:1!important;backdrop-filter:none!important;background:transparent!important;margin:0 0 8px!important;padding:6px 0 14px!important;border-bottom:1px solid #292b30!important}
-header h1{font-size:clamp(22px,5vw,28px);letter-spacing:.012em}
-header .logo{width:42px;height:42px;border-radius:12px}
-header .pill{white-space:nowrap;font-size:11px;padding:6px 8px}
-header .small{font-size:11px}
-.panel{background:#151619;border:1px solid #2b2e34;border-radius:16px;padding:14px;margin-top:10px;box-shadow:none;min-width:0}
-.panel h2{font-size:19px;margin:0 0 12px;line-height:1.25;letter-spacing:-.02em}
-.panel h3{font-size:16px;margin:0 0 10px;line-height:1.3}
-.grid,.grid3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-#agendaStats{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px}
-#agendaStats .stat{padding:10px 8px;border-radius:12px;min-width:0}
-#agendaStats .stat strong{font-size:clamp(17px,4.2vw,24px);line-height:1.3}
-#agendaStats .stat span{font-size:10px;line-height:1.25;overflow-wrap:normal}
-.field{font-size:12px;gap:5px;margin:5px 0;color:#bbb;letter-spacing:0;text-transform:none}
-input,select,textarea{min-height:42px;padding:10px 11px;border:1px solid #383b42;border-radius:11px;background:#101114;color:#fff;box-shadow:none;max-width:100%}
-input:focus,select:focus,textarea:focus{outline:1px solid var(--accent)}
-.btn{border-radius:10px;padding:9px 12px;font-size:13px;box-shadow:none;min-height:40px}
-.btn.secondary{background:#24262c;border:1px solid #3b3f47;color:#f0f0f1}
-.btn.danger{background:#3b2225;color:#ffc5c5;border:1px solid #674347}
-.btn.tiny{font-size:12px;padding:8px 10px;min-height:36px}
-.actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-.actions>.btn{font-size:12px;min-height:38px}
-.item{background:transparent;border:0;border-bottom:1px solid #303137;border-radius:0;box-shadow:none;padding:12px 0;margin:0;min-width:0}
-.item:last-child{border-bottom:0}
-.item-main{min-width:0;flex:1}
-.item-main b{font-size:14px}
-.item .actions{display:flex;gap:6px;flex-wrap:wrap;width:auto}
-.item .actions button{flex:0 1 auto;min-width:0}
-.stat{background:#111215;border:1px solid #2d2f35;border-radius:12px;padding:10px}
-.stat strong{font-size:22px}
-.preview{padding:13px;background:#101114;border-radius:12px;line-height:1.55;border:1px solid #35363a}
-.note{font-size:12px;line-height:1.55;padding:10px;border-left:3px solid var(--accent);color:#c3c4c6;background:#18191b;border-radius:0 8px 8px 0}
-.pill{font-size:11px}
-.slot{border-radius:9px;padding:8px 10px;font-size:12px}
-.dayhead{font-size:14px;margin-top:13px}
-.topnav{position:fixed;bottom:0;z-index:8;background:#101115;border-top:1px solid #343438;box-shadow:none;min-height:62px;padding-bottom:env(safe-area-inset-bottom)}
-.topnav button{font-size:12px;font-weight:500;min-height:54px;padding:7px 3px;margin:0 3px;border-radius:0;line-height:1.35;display:block}
-.topnav button.active{color:var(--accent);border-top:2px solid var(--accent);background:transparent;box-shadow:none}
-.ux-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}
-.ux-panel-head h3{margin:0;min-width:0;flex:1;font-size:15px;line-height:1.3;overflow-wrap:break-word}
-.ux-panel-toggle{flex:0 0 auto;min-width:84px;max-width:none;white-space:nowrap;overflow-wrap:normal;word-break:normal;line-height:1.2;padding:8px 11px;font-size:12px;font-weight:600;border:1px solid #42454c;border-radius:9px;background:#24262b;color:#eee}
-.ux-panel-body{margin-top:12px}
-.ux-collapsed .ux-panel-body{display:none}
-.ux-collapsed{padding-bottom:14px}
-.ux-student-search{display:block;margin:0 0 10px;width:100%}
-.jf-delete-toolbar{padding:10px;border-radius:12px}
-.jf-student-group{box-shadow:none}
-.jf-rule-compact-actions{flex:0 0 auto}
-#agendaItems .item{gap:10px}
-#agendaItems .item .actions{width:auto;display:flex;flex-direction:row;gap:7px}
-#agendaItems .item .actions button{width:auto}
-#page-disponibilidade .panel .actions{gap:7px}
-#page-config .panel .actions .btn{max-width:100%;white-space:normal;overflow-wrap:break-word}
-#page-config .panel button{max-width:100%}
-#page-config .panel .item{align-items:center}
-#page-config .panel .item .grid{min-width:0}
-dialog{max-width:min(94vw,520px);max-height:calc(100dvh - 18px);padding:15px;overflow:auto;border-radius:15px}
-dialog .actions{position:sticky;bottom:-16px;background:#1b1b1b;padding:12px 0;z-index:2;display:flex}
+body{background:#0b0c0e;color:#f5f5f6;overflow-x:hidden;padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+.wrap{max-width:880px;margin:0 auto;padding:10px 12px 100px}
+header{position:static!important;display:flex;gap:8px;align-items:center;padding:8px 0 12px!important;margin:0 0 10px!important;background:transparent!important;backdrop-filter:none!important;border-bottom:1px solid #292b30!important}
+header>div:first-child{min-width:0;gap:9px!important}
+header .logo{width:38px;height:38px;border-radius:10px;flex:0 0 38px;box-shadow:none;border:1px solid #a88d21}
+header h1{font-size:clamp(21px,5.4vw,28px)!important;letter-spacing:.02em;line-height:1.12;white-space:nowrap}
+header .small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header #todayLabel{font-size:10px;white-space:nowrap;padding:5px 7px;flex-shrink:0}
+#jfVersion{font-size:10px;color:#e6cb67;letter-spacing:.03em;display:block;margin-top:3px}
+.panel{border:1px solid #292c32!important;box-shadow:none!important;background:#151619!important;border-radius:15px!important;padding:12px!important;margin-top:10px!important;min-width:0}
+.panel h2{font-size:18px!important;margin:0 0 8px!important;line-height:1.25!important}
+.panel h3{font-size:15px!important;margin:0 0 8px!important;line-height:1.3!important}
+.grid,.grid3{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+#agendaStats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;margin-top:10px!important}
+#agendaStats .stat{padding:9px 7px!important;background:#101114;border:1px solid #2e3038;border-radius:11px!important;min-width:0}
+#agendaStats .stat strong{display:block;font-size:clamp(16px,4vw,23px)!important;line-height:1.2!important;color:var(--jf-gold)}
+#agendaStats .stat span{display:block;font-size:10px!important;line-height:1.2;white-space:normal;word-break:normal;overflow-wrap:normal}
+.field{font-size:12px!important;gap:5px!important;margin:5px 0!important;letter-spacing:0!important;text-transform:none!important;color:#c5c5ca!important}
+input,select,textarea{background:#101114!important;color:#f4f4f5!important;border:1px solid #383c43!important;border-radius:10px!important;min-height:40px!important;padding:9px 10px!important;box-shadow:none!important;max-width:100%;font-size:14px!important}
+input:focus,select:focus,textarea:focus{outline:2px solid #ffd700!important;outline-offset:0}
+button{max-width:100%}
+.btn{background:#ffd700;color:#101010;min-height:38px!important;border-radius:10px!important;padding:9px 11px!important;font-size:12px!important;line-height:1.25;box-shadow:none!important;font-weight:700}
+.btn.secondary{background:#22252a;color:#f3f3f4;border:1px solid #383d45!important}
+.btn.danger{background:#3b2325!important;color:#ffc7c7!important;border:1px solid #6a3b41!important}
+.actions{display:flex;align-items:center;gap:7px!important;flex-wrap:wrap}
+.actions>.btn{flex:0 1 auto}
+.item{background:transparent!important;border:0!important;border-bottom:1px solid #2a2c32!important;border-radius:0!important;padding:10px 0!important;margin:0!important;min-width:0}
+.item:last-child{border-bottom:0!important}
+.item-main{min-width:0!important;flex:1}
+.item-main b{font-size:14px;line-height:1.3}
+.item .actions{width:auto!important;display:flex!important;flex-wrap:wrap;gap:6px!important;min-width:0}
+.item .actions>.btn{min-width:0;flex:0 1 auto}
+.stat{background:#111214;border:1px solid #2d2e35;border-radius:12px;padding:10px}
+.stat strong{font-size:21px}
+.pill{font-size:10px!important}
+.dayhead{font-size:14px;margin:13px 0 6px!important}
+.note,.hint{font-size:12px!important;line-height:1.55!important;color:#bfc0c4}
+.preview{font-size:13px!important;line-height:1.55;border-radius:10px;padding:12px}
+.ux-panel-head{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:8px!important;min-width:0}
+.ux-panel-head h3{font-size:15px!important;line-height:1.25!important;min-width:0;overflow-wrap:normal!important;word-break:normal!important;margin:0!important}
+.ux-panel-toggle{font-size:12px!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;width:83px!important;min-width:83px!important;max-width:83px!important;padding:8px 9px!important;border-radius:9px!important;line-height:1.2!important;flex:none!important;text-align:center}
+.ux-collapsed .ux-panel-body{display:none!important}.ux-panel-body{margin-top:12px}
+.ux-collapsed{padding-bottom:12px!important}
+.topnav{position:fixed!important;bottom:0!important;left:0;right:0;display:flex!important;align-items:stretch;background:#111216!important;border-top:1px solid #34353a!important;z-index:15;box-shadow:none!important;padding:0 4px env(safe-area-inset-bottom)!important}
+.topnav button{flex:1;min-height:54px!important;margin:0!important;padding:8px 2px!important;font-size:11px!important;font-weight:600!important;line-height:1.4!important;display:block!important;border-radius:0!important;color:#acaeb4}
+.topnav button.active{color:#ffd700!important;background:rgba(255,215,0,.055)!important;border-top:2px solid #ffd700!important;box-shadow:none!important}
+#page-agenda .panel:first-child .actions{display:flex;align-items:center;justify-content:space-between;gap:7px}
+#page-agenda .panel:first-child h2{margin:0!important}
+#page-agenda .panel:first-child .grid{display:grid;grid-template-columns:1fr 1fr!important}
+#page-agenda #agendaItems>.dayhead{color:#ffd700;font-weight:700}
+#page-agenda #agendaItems .item{display:flex;align-items:flex-start;gap:8px;flex-direction:column}
+#page-agenda #agendaItems .item-main{width:100%}
+#page-agenda #agendaItems .item .actions{display:flex;gap:6px}
+#page-agenda #agendaItems .item .actions .btn{font-size:11px!important;min-height:34px!important;padding:7px 10px!important}
+#page-agenda #agendaItems .item .actions button.danger{background:#302023!important;color:#fbb7b7!important}
+/* Compact view of weekly rules remains fully interactive. */
+.jf-student-group,.jf-rule-card{box-shadow:none!important}
+.jf-compact-rule{gap:6px!important;padding:10px!important}
+.jf-rule-compact-actions{gap:5px!important}
+.jf-edit-compact,.jf-more-details>summary{font-size:11px!important;padding:8px 9px!important;white-space:nowrap!important}
+.jf-rule-title{font-size:13px!important}
+.jf-rule-caption{font-size:11px!important}
+.jf-student-group-head strong{font-size:13px!important}
+.jf-compact-toolbar{gap:8px}
+.ux-student-search{width:100%}
+.ux-panel-head .ux-panel-toggle{align-self:center}
+.ux-compact-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ux-item-actions{margin-top:7px}
+.ux-actions-summary{display:inline-flex;align-items:center;justify-content:center;min-height:33px;padding:7px 11px;border:1px solid #3b404b;border-radius:9px;background:#24262b;color:#ededed;font-size:12px;font-weight:650;list-style:none;cursor:pointer}
+.ux-item-actions>summary::-webkit-details-marker{display:none}
+.ux-item-actions .actions{padding-top:8px}
+#page-config .panel .actions>.btn{max-width:100%;overflow-wrap:normal;white-space:normal}
+#page-config .panel .item{flex-wrap:wrap}
+#page-config #workingFields .item{display:grid;grid-template-columns:minmax(72px,0.8fr) minmax(0,2fr);align-items:center;gap:8px}
+#page-config #workingFields .item .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#page-config #workingFields .item .rowcheck{min-width:0!important;font-size:12px}
+dialog{max-width:min(96vw,520px)!important;max-height:calc(100dvh - 22px)!important;overflow:auto!important;border-radius:14px!important;padding:14px!important}
+dialog .actions{position:sticky!important;bottom:-14px;background:#1b1b1b;padding:12px 0;z-index:2}
 @media(max-width:560px){
- .wrap{padding:10px 11px 88px}
- .panel{padding:12px;margin-top:10px}
+ .wrap{padding:8px 10px 82px!important}
  .grid,.grid3{grid-template-columns:repeat(2,minmax(0,1fr))!important}
  #agendaStats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
  .item{flex-direction:column;align-items:stretch}
- .item .actions{justify-content:flex-start}
- #page-agenda .panel:first-child .actions{display:flex;justify-content:space-between}
- #page-agenda .panel:first-child h2{margin:0}
+ .item .actions{justify-content:flex-start!important}
  .jf-rule-buttons{display:flex;flex-wrap:wrap}
- #page-config #workingFields .item{flex-direction:row;align-items:center}
- #page-config #workingFields .item .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
- .ux-panel-head h3{font-size:15px}
- .topnav button{font-size:11px}
+ .ux-panel-toggle{width:83px!important;min-width:83px!important}
 }
-@media(max-width:370px){#agendaStats .stat strong{font-size:16px}#agendaStats .stat span{font-size:9px}.ux-panel-toggle{min-width:74px}}
+@media(max-width:355px){header h1{font-size:19px!important}#agendaStats .stat strong{font-size:16px!important}#agendaStats .stat span{font-size:9px!important}.topnav button{font-size:10px!important}}
