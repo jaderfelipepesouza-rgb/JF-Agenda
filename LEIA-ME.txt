@@ -1,4 +1,11 @@
-JF | AGENDA v1.1 — ATUALIZAÇÃO DO GITHUB PAGES
+JF | AGENDA v1.1.1 — CORREÇÃO DE DIGITAÇÃO HH:MM
+=================================================
+
+CORREÇÃO: digitar 2020 agora resulta em 20:20 automaticamente. Vale para horários de recorrência, aulas, bloqueios, configurações e remarcações. Horários inválidos continuam rejeitados pela validação do aplicativo. Nenhum dado anterior é apagado ou migrado por essa alteração.
+
+ATUALIZAÇÃO: faça backup antes; publique na raiz do MESMO repositório GitHub todos os arquivos deste ZIP, incluindo o NOVO timefix.js. Aguarde o Pages concluir a publicação e recarregue o Chrome. Não limpe os dados do navegador. O service worker tem cache renovado para v1.1.1.
+
+JF | AGENDA v1.1.1 — ATUALIZAÇÃO DO GITHUB PAGES
 ===============================================
 
 IMPORTANTE ANTES DE ATUALIZAR
@@ -11,14 +18,14 @@ PUBLICAÇÃO
 1. Extraia este ZIP no computador.
 2. No repositório existente do GitHub (JF-Agenda), branch main, envie os arquivos
    DO DIRETÓRIO RAIZ EXTRAÍDO (não faça upload do ZIP como se fosse o site).
-3. Selecione todos: index.html, v1.js, v1.css, v11.js, v11.css, sw.js,
+3. Selecione todos: index.html, v1.js, v1.css, v11.js, v11.css, timefix.js, sw.js,
    manifest.webmanifest, icon.svg, icon-192.png e icon-512.png.
 4. Substitua os arquivos anteriores de mesmo nome; os novos arquivos v11.*
    devem ficar NO MESMO NÍVEL do index.html.
 5. Mantenha Settings > Pages > Deploy from a branch > main > /(root).
 6. Acesse o endereço antigo, aguarde a publicação e recarregue. Feche e abra
    o PWA caso ainda apareça conteúdo anterior. O service worker usa cache
-   identificado como jf-agenda-v11-20261109a.
+   identificado como jf-agenda-v111-20261109a.
 7. Confirme que os dados anteriores permanecem. Exporte um novo backup v1.1.
 
 FUNCIONALIDADES DA V1.1
